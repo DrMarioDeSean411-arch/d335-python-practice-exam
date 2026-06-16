@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D335 – Full Practice Exam</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a1a;min-height:100vh;font-size:15px}
+.shell{max-width:840px;margin:0 auto;padding:24px 16px 80px}
+
+/* top bar */
+.top-bar{background:#fff;border:0.5px solid #e0ddd6;border-radius:12px;padding:20px 24px;margin-bottom:18px}
+.top-title{font-size:19px;font-weight:500}
+.top-sub{font-size:13px;color:#6b6b67;margin-top:3px}
+.top-pills{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.pill{display:inline-block;font-size:11px;padding:3px 10px;border-radius:999px;font-weight:500;border:0.5px solid}
+.p-c1{background:#E1F5EE;color:#0F6E56;border-color:#9FE1CB}
+.p-c2{background:#E6F1FB;color:#185FA5;border-color:#B5D4F4}
+.p-c3{background:#EEEDFE;color:#534AB7;border-color:#CECBF6}
+.p-gen{background:#f0eeea;color:#444;border-color:#ccc}
+.p-hard{background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1}
+.p-mid{background:#FAEEDA;color:#633806;border-color:#FAC775}
+
+/* scoreboard */
+.scr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:8px;margin-bottom:14px}
+.scr-card{background:#fff;border:0.5px solid #e0ddd6;border-radius:10px;padding:12px;text-align:center}
+.scr-num{font-size:22px;font-weight:500}
+.scr-lbl{font-size:11px;color:#6b6b67;margin-top:2px}
+.prog-wrap{background:#e8e6e0;border-radius:999px;height:5px;margin-bottom:4px;overflow:hidden}
+.prog-bar{height:5px;border-radius:999px;transition:width .3s;background:#1D9E75}
+.prog-lbl{font-size:11px;color:#9b9b97;display:flex;justify-content:space-between;margin-bottom:16px}
+
+/* section nav */
+.sec-label{font-size:11px;font-weight:500;color:#9b9b97;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.sec-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.sec-btn{padding:8px 16px;border:0.5px solid #ccc;border-radius:8px;font-size:13px;background:#fff;cursor:pointer;color:#555;transition:all .12s;font-family:inherit}
+.sec-btn:hover{background:#f0eeea}
+.sec-btn.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a;font-weight:500}
+.sec-btn .sec-count{font-size:11px;opacity:.7;margin-left:4px}
+
+/* question tabs */
+.tab-row{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:14px}
+.t-btn{padding:5px 9px;border:0.5px solid #ccc;border-radius:7px;font-size:12px;background:#fff;cursor:pointer;color:#666;transition:all .12s;font-family:inherit}
+.t-btn.active{background:#f0eeea;color:#1a1a1a;border-color:#777;font-weight:500}
+.t-btn.correct{border-color:#1D9E75;color:#0F6E56;background:#f0fbf6}
+.t-btn.wrong{border-color:#A32D2D;color:#A32D2D;background:#fdf2f2}
+
+/* question card */
+.q-card{background:#fff;border:0.5px solid #e0ddd6;border-radius:12px;padding:20px;margin-bottom:12px}
+.q-meta{display:flex;align-items:center;gap:7px;margin-bottom:10px;flex-wrap:wrap}
+.q-num{font-size:11px;color:#9b9b97}
+.diff-badge{font-size:10px;padding:2px 8px;border-radius:999px;font-weight:500;border:0.5px solid}
+.d-found{background:#EAF3DE;color:#27500A;border-color:#C0DD97}
+.d-inter{background:#FAEEDA;color:#633806;border-color:#FAC775}
+.d-adv{background:#FCEBEB;color:#A32D2D;border-color:#F7C1C1}
+.q-stem{font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:10px;line-height:1.65}
+.q-stem code{font-family:'Courier New',monospace;font-size:12.5px;background:#f0eeea;padding:1px 5px;border-radius:4px}
+.code-block{font-family:'Courier New',monospace;font-size:12.5px;background:#f5f5f3;border:0.5px solid #e0ddd6;border-radius:8px;padding:12px;white-space:pre;overflow-x:auto;color:#1a1a1a;line-height:1.65;margin-bottom:12px}
+.opt-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.opt-btn{text-align:left;padding:10px 14px;border:0.5px solid #ccc;border-radius:8px;font-size:13.5px;background:#fff;cursor:pointer;color:#1a1a1a;line-height:1.5;transition:all .12s;font-family:inherit}
+.opt-btn:hover:not(:disabled){background:#f5f5f3;border-color:#888}
+.opt-btn.reveal-correct{border-color:#1D9E75;background:#EAF3DE;color:#27500A;font-weight:500}
+.opt-btn.selected-wrong{border-color:#A32D2D;background:#FCEBEB;color:#791F1F}
+.opt-btn:disabled{cursor:default}
+.opt-btn code{font-family:'Courier New',monospace;font-size:12px;background:rgba(0,0,0,0.06);padding:1px 4px;border-radius:3px}
+
+/* fill-in */
+.fill-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.fill-inp{font-family:'Courier New',monospace;font-size:13px;padding:8px 12px;border:0.5px solid #ccc;border-radius:8px;background:#f5f5f3;color:#1a1a1a;width:220px}
+.fill-inp:focus{outline:none;border-color:#777}
+.fill-inp.correct{border-color:#1D9E75;background:#EAF3DE;color:#27500A}
+.fill-inp.wrong{border-color:#A32D2D;background:#FCEBEB;color:#791F1F}
+.btn-sub{padding:8px 18px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit}
+.btn-sub:hover{background:#333}
+
+/* feedback */
+.feedback{margin-top:12px;padding:12px 16px;border-radius:8px;font-size:13px;line-height:1.7}
+.fb-c{background:#EAF3DE;border:0.5px solid #C0DD97;color:#27500A}
+.fb-w{background:#FCEBEB;border:0.5px solid #F7C1C1;color:#791F1F}
+.misconception{margin-top:6px;font-size:12px;color:#666;font-style:italic;border-top:0.5px solid rgba(0,0,0,.08);padding-top:6px}
+
+/* nav */
+.nav-row{display:flex;gap:8px;margin-top:6px}
+.nav-btn{padding:8px 18px;background:#fff;border:0.5px solid #ccc;border-radius:8px;font-size:13px;cursor:pointer;color:#1a1a1a;transition:all .12s;font-family:inherit}
+.nav-btn:hover{background:#f0eeea}
+
+/* breakdown */
+.breakdown{background:#fff;border:0.5px solid #e0ddd6;border-radius:12px;padding:20px;margin-top:20px}
+.bd-title{font-size:14px;font-weight:500;margin-bottom:14px}
+.bd-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px}
+.bd-label{min-width:140px;color:#555}
+.bd-bar-wrap{flex:1;background:#e8e6e0;border-radius:999px;height:8px;overflow:hidden}
+.bd-bar{height:8px;border-radius:999px;transition:width .4s}
+.bd-pct{min-width:42px;text-align:right;color:#6b6b67;font-size:12px}
+.bd-score{min-width:55px;text-align:right;color:#9b9b97;font-size:12px}
+
+/* section summary cards */
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:18px}
+.sum-card{background:#fff;border:0.5px solid #e0ddd6;border-radius:10px;padding:14px;text-align:center}
+.sum-title{font-size:11px;color:#9b9b97;margin-bottom:6px}
+.sum-num{font-size:20px;font-weight:500}
+.sum-sub{font-size:11px;color:#9b9b97;margin-top:2px}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<div class="top-bar">
+  <div class="top-title">D335 — Introduction to Python Programming</div>
+  <div class="top-sub">Full practice exam · 50 questions · 5 sections · all auto-graded</div>
+  <div class="top-pills">
+    <span class="pill p-c1">C1 Basic Scripts</span>
+    <span class="pill p-c2">C2 Control Flow</span>
+    <span class="pill p-c3">C3 Packages &amp; Modules</span>
+    <span class="pill p-gen">Knowledge Checks</span>
+    <span class="pill p-hard">Foundational → Advanced</span>
+  </div>
+</div>
+
+<!-- master scoreboard -->
+<div class="scr-grid">
+  <div class="scr-card"><div class="scr-num" id="sc-tot">0<span style="font-size:13px;color:#9b9b97">/50</span></div><div class="scr-lbl">Answered</div></div>
+  <div class="scr-card"><div class="scr-num" id="sc-right" style="color:#1D9E75">0</div><div class="scr-lbl">Correct</div></div>
+  <div class="scr-card"><div class="scr-num" id="sc-wrong" style="color:#A32D2D">0</div><div class="scr-lbl">Incorrect</div></div>
+  <div class="scr-card"><div class="scr-num" id="sc-pct">—</div><div class="scr-lbl">Overall score</div></div>
+  <div class="scr-card"><div class="scr-num" id="sc-pass" style="color:#9b9b97">—</div><div class="scr-lbl">Exam ready?</div></div>
+</div>
+<div class="prog-wrap"><div class="prog-bar" id="prog" style="width:0%"></div></div>
+<div class="prog-lbl"><span id="prog-txt">0 of 50 answered</span><span id="pass-note" style="color:#1D9E75;font-weight:500"></span></div>
+
+<!-- section buttons -->
+<div class="sec-label">Select section</div>
+<div class="sec-row" id="sec-row"></div>
+
+<!-- per-section summary (mini scorecards) -->
+<div class="sum-grid" id="sum-grid"></div>
+
+<!-- tabs + question -->
+<div class="sec-label" id="q-label">Questions</div>
+<div class="tab-row" id="tabs"></div>
+<div id="qview"></div>
+<div class="nav-row">
+  <button class="nav-btn" onclick="go(-1)">&#8592; Prev</button>
+  <button class="nav-btn" onclick="go(1)">Next &#8594;</button>
+</div>
+
+<!-- breakdown -->
+<div class="breakdown">
+  <div class="bd-title">Competency &amp; topic breakdown</div>
+  <div id="bd-rows"></div>
+</div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════════════════════
+
+const SECTIONS=[
+{key:'gen', label:'Knowledge checks', color:'#888780', short:'General'},
+{key:'c1',  label:'C1 — Basic Scripts', color:'#1D9E75', short:'C1'},
+{key:'c2',  label:'C2 — Control Flow', color:'#185FA5', short:'C2'},
+{key:'c3',  label:'C3 — Packages &amp; Modules', color:'#534AB7', short:'C3'},
+];
+
+// ── SECTION 1: General knowledge checks (20 q) ──────────────────
+const GEN=[
+{sec:'gen',comp:'C1',topic:'File I/O',diff:'inter',type:'mc',
+stem:'Which statement correctly opens <code>data.txt</code> for reading?',
+opts:['file.open(\'data.txt\',\'r\')','open(\'data.txt\',\'r\')','open(data.txt,\'r\')','read(\'data.txt\')'],
+ans:1,
+rationale:'<strong>B is correct.</strong> Python\'s built-in is <code>open()</code>, not <code>file.open()</code>. The filename must be a quoted string and <code>\'r\'</code> is the read-mode flag.',
+misconception:'A is common — students call it as a method on a nonexistent file object. C omits quotes, causing a NameError.'},
+
+{sec:'gen',comp:'C1',topic:'File I/O',diff:'inter',type:'mc',
+stem:'<code>grades.txt</code> has exactly two lines. What prints?\n\nwith open(\'grades.txt\',\'r\') as f:\n    lines = f.readlines()\nprint(len(lines))',code:true,
+opts:['The raw text of both lines','1','2','None'],
+ans:2,
+rationale:'<strong>C is correct.</strong> <code>readlines()</code> returns a list — one element per line. Two lines → list of length 2.',
+misconception:'Students confuse <code>read()</code> (single string) with <code>readlines()</code> (list of strings).'},
+
+{sec:'gen',comp:'C1',topic:'Lists',diff:'found',type:'mc',
+stem:'What does this code print?\n\nscores = [72, 88, 95, 61]\nprint(scores[2])',code:true,
+opts:['88','61','95','72'],
+ans:2,
+rationale:'<strong>C is correct.</strong> Python uses zero-based indexing: 0→72, 1→88, 2→95, 3→61.',
+misconception:'Students who pick A are counting from index 1. Draw a visual index diagram for remediation.'},
+
+{sec:'gen',comp:'C1',topic:'Lists',diff:'found',type:'fill',
+stem:'Fill in the blank so 100 is added to the end of the list.\n\nresults = [85, 90, 78]\nresults.________(100)',code:true,
+ans:'append',
+rationale:'<strong>append</strong> is correct. <code>list.append(x)</code> adds x to the end in-place.',
+misconception:'Students write append(results,100) — confusing method syntax with standalone function syntax.'},
+
+{sec:'gen',comp:'C2',topic:'File I/O',diff:'inter',type:'mc',
+stem:'Which option correctly writes each list item on its own line?\n\nfruits = [\'apple\',\'banana\',\'cherry\']',
+opts:['open(\'out.txt\',\'w\').write(fruits)','f.writelines(fruits)','f.write(item + \'\\n\') inside a for loop','f.write(str(fruits))'],
+ans:2,
+rationale:'<strong>C is correct.</strong> A for loop with <code>f.write(item+\'\\n\')</code> places each item on its own line. <code>writelines()</code> without embedded newlines concatenates everything.',
+misconception:'B is a credible distractor — writelines() is real but requires \'\\n\' inside each string.'},
+
+{sec:'gen',comp:'C2',topic:'Lists',diff:'found',type:'mc',
+stem:'What does this print?\n\nnums = [5, 2, 9, 1, 8]\nnums.sort()\nprint(nums[0])',code:true,
+opts:['5','9','1','2'],
+ans:2,
+rationale:'<strong>C is correct.</strong> <code>sort()</code> rearranges ascending: [1,2,5,8,9]. Index 0 is now 1.',
+misconception:'Students who pick A assume sort() leaves the order unchanged.'},
+
+{sec:'gen',comp:'C1',topic:'File I/O',diff:'inter',type:'mc',
+stem:'What mode flag appends to an existing file without deleting content?',
+opts:['\'r\'','\'w\'','\'a\'','\'rw\''],
+ans:2,
+rationale:'<strong>C is correct.</strong> <code>\'a\'</code> positions the cursor at end of file. <code>\'w\'</code> truncates to zero bytes on open.',
+misconception:'\'w\' is the most common wrong answer — students forget it destroys existing content.'},
+
+{sec:'gen',comp:'C2',topic:'Lists',diff:'inter',type:'mc',
+stem:'What is printed?\n\nwords = [\'cat\',\'elephant\',\'dog\',\'bee\']\nprint(max(words, key=len))',code:true,
+opts:['\'cat\'','\'dog\'','\'bee\'','\'elephant\''],
+ans:3,
+rationale:'<strong>D is correct.</strong> <code>max(words, key=len)</code> returns the element with the greatest length. \'elephant\' has 8 characters.',
+misconception:'Students who pick \'dog\' think max() uses alphabetical order. key=len compares lengths.'},
+
+{sec:'gen',comp:'C1',topic:'File I/O',diff:'inter',type:'mc',
+stem:'Which code prints each file line without extra blank lines between them?',
+opts:['for line in f: print(line)','for line in f: print(line.strip())','print(f.read())','print(f.readlines())'],
+ans:1,
+rationale:'<strong>B is correct.</strong> Lines end with \'\\n\'; print() adds another. strip() removes the trailing newline.',
+misconception:'A produces double-spaced output. C dumps everything at once. D prints the raw list representation.'},
+
+{sec:'gen',comp:'C2',topic:'Lists',diff:'inter',type:'mc',
+stem:'What does this print?\n\ndata = [10, 20, 30, 40, 50]\nprint(data[-1])',code:true,
+opts:['10','40','50','IndexError'],
+ans:2,
+rationale:'<strong>C is correct.</strong> Negative indexing counts from the end. <code>data[-1]</code> is the last element, 50.',
+misconception:'Students unfamiliar with negative indexing guess IndexError or pick the second-to-last.'},
+
+{sec:'gen',comp:'C2',topic:'Lists',diff:'inter',type:'fill',
+stem:'Fill in the blank to remove and return the last element.\n\nstack = [1, 2, 3, 4]\nval = stack.________()',code:true,
+ans:'pop',
+rationale:'<strong>pop</strong> is correct. Called with no argument, <code>list.pop()</code> removes and returns the last element.',
+misconception:'Students write remove() — removes by value, not position, and doesn\'t return the item.'},
+
+{sec:'gen',comp:'C1',topic:'File I/O',diff:'adv',type:'mc',
+stem:'What problem does this code have?\n\nf = open(\'log.txt\',\'w\')\nf.write(\'entry 1\')\nf.write(\'entry 2\')',code:true,
+opts:['Nothing — works correctly','Both writes fail before closing','File never properly closed, risking data loss','\'w\' does not support multiple write() calls'],
+ans:2,
+rationale:'<strong>C is correct.</strong> Without <code>f.close()</code> or a <code>with</code> block, buffered writes may not reach disk. Always use <code>with open(...) as f:</code>.',
+misconception:'Students pick A because small scripts often survive it, but it\'s a reliability flaw.'},
+
+{sec:'gen',comp:'C2',topic:'Lists',diff:'adv',type:'mc',
+stem:'What is the output?\n\nprices = [3.5, 1.2, 4.8, 2.1]\nprices.sort(reverse=True)\nprint(prices[0])',code:true,
+opts:['1.2','3.5','4.8','2.1'],
+ans:2,
+rationale:'<strong>C is correct.</strong> <code>sort(reverse=True)</code> sorts descending: [4.8,3.5,2.1,1.2]. Index 0 is the largest.',
+misconception:'Students who answer A think reverse=True puts the smallest first.'},
+
+{sec:'gen',comp:'C1',topic:'File I/O',diff:'inter',type:'mc',
+stem:'What does <code>f.read()</code> return?',
+opts:['A list where each element is one line','A single string containing the entire file','A dictionary of line numbers to text','A bytes object'],
+ans:1,
+rationale:'<strong>B is correct.</strong> <code>read()</code> returns the full file as one string. Contrast with <code>readlines()</code> which splits on newlines.',
+misconception:'Students frequently swap read() and readlines(). Drill both in the same exercise.'},
+
+{sec:'gen',comp:'C2',topic:'Lists',diff:'adv',type:'mc',
+stem:'What is printed?\n\nnums = [4, 7, 2, 9, 5]\nresult = [x for x in nums if x > 4]\nprint(len(result))',code:true,
+opts:['2','3','4','5'],
+ans:1,
+rationale:'<strong>B is correct.</strong> Values strictly > 4: [7, 9, 5]. That is 3 elements.',
+misconception:'Students who pick 2 filter for values > 7. Students who pick 4 include 4 itself (condition is >, not >=).'},
+
+{sec:'gen',comp:'C2',topic:'File I/O',diff:'adv',type:'mc',
+stem:'Which code reads all integers from a file (one per line) into a list?\n\nwith open(\'nums.txt\') as f:\n    _______________',code:true,
+opts:['nums = f.read()','nums = [int(line) for line in f]','nums = f.readlines(int)','nums = list(int(f))'],
+ans:1,
+rationale:'<strong>B is correct.</strong> Iterating a file yields strings. Wrapping each in <code>int()</code> inside a list comprehension produces a clean integer list.',
+misconception:'Students pick A — it returns one big string, not a list of integers.'},
+
+{sec:'gen',comp:'C2',topic:'Lists',diff:'inter',type:'fill',
+stem:'Fill in the blank to insert 99 at index 1, not at the end.\n\nscores = [10, 20, 30]\nscores.________(1, 99)',code:true,
+ans:'insert',
+rationale:'<strong>insert</strong> is correct. <code>list.insert(i, x)</code> inserts x before the element at index i.',
+misconception:'Students write append — which always adds to the end, ignoring the index argument.'},
+
+{sec:'gen',comp:'C2',topic:'Lists',diff:'inter',type:'mc',
+stem:'What is the final value of <code>total</code>?\n\nvalues = [3, 6, 9, 12]\ntotal = 0\nfor v in values:\n    if v % 2 == 0:\n        total += v\nprint(total)',code:true,
+opts:['12','18','30','3'],
+ans:1,
+rationale:'<strong>B is correct.</strong> Only even numbers accumulate: 6 + 12 = 18. 3 and 9 are odd and skipped.',
+misconception:'Students who pick 30 summed all values. Students who pick 12 only counted the last even.'},
+
+{sec:'gen',comp:'C1',topic:'File I/O',diff:'adv',type:'mc',
+stem:'What exception is raised when opening a non-existent file with <code>\'r\'</code> mode?',
+opts:['ValueError','TypeError','FileNotFoundError','IOError'],
+ans:2,
+rationale:'<strong>C is correct.</strong> Python raises <code>FileNotFoundError</code> (subclass of OSError) when a file opened for reading doesn\'t exist.',
+misconception:'IOError was Python 2; in Python 3 it is an alias for OSError, but the specific exception is FileNotFoundError.'},
+
+{sec:'gen',comp:'C2',topic:'File I/O',diff:'adv',type:'mc',
+stem:'What is wrong with this code counting lines containing \'ERROR\'?\n\ncount = 0\nwith open(\'log.txt\') as f:\n    lines = f.readlines()\nfor line in lines:\n    if \'ERROR\' == line:\n        count += 1\nprint(count)',code:true,
+opts:['Nothing is wrong','readlines() should be read()','Condition should be \'ERROR\' in line, not == line','for loop must be inside the with block'],
+ans:2,
+rationale:'<strong>C is correct.</strong> <code>== line</code> checks if the entire line is exactly \'ERROR\' — almost never true. The <code>in</code> operator checks substring containment.',
+misconception:'D is a tempting trap — the loop can safely run outside the with block since lines is already in memory.'},
+];
+
+// ── SECTION 2: C1 Targeted Test (10 q from your PDF) ─────────────
+const C1=[
+{sec:'c1',comp:'C1',topic:'Basic Output',diff:'found',type:'mc',
+stem:'What does this print?\n\nprint(\'Score:\', 100)',code:true,
+opts:['Score: 100','\'Score:\', 100','Score 100','SyntaxError'],
+ans:0,
+rationale:'<strong>A is correct.</strong> <code>print()</code> with multiple comma-separated arguments inserts a space between each. Output: <code>Score: 100</code>.',
+misconception:'Students pick B thinking the quotes and comma appear literally. They don\'t — print() formats its arguments.'},
+
+{sec:'c1',comp:'C1',topic:'Type Conversion',diff:'found',type:'mc',
+stem:'What is the data type of x after this line?\n\nx = int(\'42\')',code:true,
+opts:['str','float','int','bool'],
+ans:2,
+rationale:'<strong>C is correct.</strong> <code>int()</code> converts a string representation of a whole number into an integer. x holds the integer 42.',
+misconception:'Students confuse the input type (str) with the output type. int() transforms, not preserves.'},
+
+{sec:'c1',comp:'C1',topic:'Variable Naming',diff:'found',type:'mc',
+stem:'Which is a legal Python variable name?',
+opts:['my-score','3rdPlace','for','total_points'],
+ans:3,
+rationale:'<strong>D is correct.</strong> Variable names cannot start with a digit (B), contain hyphens (A), or use reserved keywords like <code>for</code> (C). Underscores are fine.',
+misconception:'Students forget that hyphens are the subtraction operator in Python, making A a syntax error.'},
+
+{sec:'c1',comp:'C1',topic:'Arithmetic',diff:'inter',type:'mc',
+stem:'What is the value of result?\n\nx = 14\ny = 4\nresult = x // y + x % y',code:true,
+opts:['3','5','7','4'],
+ans:1,
+rationale:'<strong>B is correct.</strong> <code>14 // 4 = 3</code> (floor division). <code>14 % 4 = 2</code> (remainder). <code>3 + 2 = 5</code>.',
+misconception:'Students who pick 3 compute only the floor division and ignore the modulo term.'},
+
+{sec:'c1',comp:'C1',topic:'String Concatenation',diff:'inter',type:'mc',
+stem:'What does this print?\n\nfirst = \'py\'\nsecond = \'thon\'\nprint((first + second).upper())',code:true,
+opts:['python','PYTHON','PY THON','TypeError'],
+ans:1,
+rationale:'<strong>B is correct.</strong> <code>first + second</code> = \'python\'. <code>.upper()</code> converts every character to uppercase. Output: PYTHON.',
+misconception:'Students who pick A forget that .upper() is called. Students who pick C invent a space that doesn\'t exist.'},
+
+{sec:'c1',comp:'C1',topic:'List Indexing',diff:'inter',type:'mc',
+stem:'What does this print?\n\nanimals = [\'cat\', \'dog\', \'bird\', \'fish\']\nprint(animals[-2])',code:true,
+opts:['dog','bird','fish','cat'],
+ans:1,
+rationale:'<strong>B is correct.</strong> Negative indices count from the end. <code>animals[-1]</code>=\'fish\', <code>animals[-2]</code>=\'bird\'.',
+misconception:'Students who pick \'dog\' count -2 from the front instead of the back.'},
+
+{sec:'c1',comp:'C1',topic:'Dictionaries',diff:'inter',type:'mc',
+stem:'What prints after this runs?\n\ninfo = {\'city\': \'Austin\', \'pop\': 978908}\ninfo[\'pop\'] += 1\nprint(info[\'pop\'])',code:true,
+opts:['978908','978909','KeyError','TypeError'],
+ans:1,
+rationale:'<strong>B is correct.</strong> <code>info[\'pop\']</code> retrieves 978908. <code>+= 1</code> adds 1 and reassigns. Output: 978909.',
+misconception:'Students who pick A think dictionaries are immutable. They are not — only tuples are immutable sequences.'},
+
+{sec:'c1',comp:'C1',topic:'String Slicing',diff:'inter',type:'mc',
+stem:'What is the output?\n\nword = \'California\'\nprint(word[2:5])',code:true,
+opts:['\'Cal\'','\'lif\'','\'ali\'','\'lifo\''],
+ans:1,
+rationale:'<strong>B is correct.</strong> <code>word[2:5]</code> extracts indices 2,3,4. C=0,a=1,l=2,i=3,f=4 → \'lif\'.',
+misconception:'Students who pick \'Cal\' start counting from index 1 instead of 0.'},
+
+{sec:'c1',comp:'C1',topic:'Error Types',diff:'adv',type:'mc',
+stem:'Which error does Python raise when you reference a variable never assigned?\n\nprint(total)',code:true,
+opts:['TypeError','SyntaxError','NameError','ValueError'],
+ans:2,
+rationale:'<strong>C is correct.</strong> <code>NameError</code> is raised when a name (variable, function) is used that Python cannot find in any scope. <code>total</code> was never assigned.',
+misconception:'Students pick TypeError thinking the type is wrong. But the problem is the name doesn\'t exist at all.'},
+
+{sec:'c1',comp:'C1',topic:'f-String Formatting',diff:'adv',type:'mc',
+stem:'What does this print?\n\nprice = 7.5\nqty = 3\nprint(f\'Total: ${price * qty:.2f}\')',code:true,
+opts:['Total: $22.5','Total: $22.50','Total: $22','SyntaxError'],
+ans:1,
+rationale:'<strong>B is correct.</strong> <code>price * qty = 22.5</code>. The format spec <code>:.2f</code> forces exactly 2 decimal places — so 22.50, not 22.5.',
+misconception:'Students pick A because 22.5 looks correct mathematically, but :.2f always produces exactly 2 decimal digits.'},
+];
+
+// ── SECTION 3: C2 Targeted Test (10 q from your PDF) ─────────────
+const C2=[
+{sec:'c2',comp:'C2',topic:'if/elif/else',diff:'found',type:'mc',
+stem:'What prints when score = 85?\n\nif score >= 90:\n    print(\'A\')\nelif score >= 80:\n    print(\'B\')\nelif score >= 70:\n    print(\'C\')\nelse:\n    print(\'F\')',code:true,
+opts:['A','B','C','F'],
+ans:1,
+rationale:'<strong>B is correct.</strong> 85 fails the first condition (>= 90). 85 >= 80 is true, so \'B\' prints. Python stops evaluating after the first true branch.',
+misconception:'Students who pick C apply both conditions. Python exits after the first true elif.'},
+
+{sec:'c2',comp:'C2',topic:'for loop / range()',diff:'found',type:'mc',
+stem:'What is the output?\n\nfor i in range(0, 10, 3):\n    print(i, end=\' \')',code:true,
+opts:['0 3 6 9','0 3 6 9 12','1 4 7 10','0 3 6'],
+ans:0,
+rationale:'<strong>A is correct.</strong> <code>range(0,10,3)</code> starts at 0, steps by 3, stops before 10: 0, 3, 6, 9. <code>end=\' \'</code> prints on one line.',
+misconception:'Students pick B thinking 9+3=12 is included. The stop value (10) is exclusive.'},
+
+{sec:'c2',comp:'C2',topic:'Function / return',diff:'found',type:'mc',
+stem:'What does this print?\n\ndef square(n):\n    return n * n\nprint(square(7))',code:true,
+opts:['7','14','49','None'],
+ans:2,
+rationale:'<strong>C is correct.</strong> <code>square(7)</code> computes 7 * 7 = 49 and returns it. <code>print()</code> displays 49.',
+misconception:'Students who pick None think return without print() produces nothing, but print() wraps the call here.'},
+
+{sec:'c2',comp:'C2',topic:'and/or operators',diff:'inter',type:'mc',
+stem:'What prints?\n\nx = 8\nif x > 5 and x < 15:\n    print(\'In range\')\nelse:\n    print(\'Out of range\')',code:true,
+opts:['In range','Out of range','True','SyntaxError'],
+ans:0,
+rationale:'<strong>A is correct.</strong> 8 > 5 is True and 8 < 15 is True. Both sides of <code>and</code> are True → \'In range\' prints.',
+misconception:'Students who pick B misread the condition or think and requires both to be equal.'},
+
+{sec:'c2',comp:'C2',topic:'while loop',diff:'inter',type:'mc',
+stem:'What is the final value of n?\n\nn = 1\nwhile n < 50:\n    n *= 2\nprint(n)',code:true,
+opts:['32','64','50','16'],
+ans:1,
+rationale:'<strong>B is correct.</strong> n doubles: 1→2→4→8→16→32→64. When n=64, n<50 is False, loop stops. n=64.',
+misconception:'Students pick 32 thinking the loop stops when n first exceeds 50. It stops at the next check, after doubling.'},
+
+{sec:'c2',comp:'C2',topic:'Function Scope',diff:'inter',type:'mc',
+stem:'What prints?\n\ndef update():\n    total = 100\nupdate()\nprint(total)',code:true,
+opts:['100','0','None','NameError'],
+ans:3,
+rationale:'<strong>D is correct.</strong> <code>total</code> is a local variable inside <code>update()</code>. It doesn\'t exist in the outer scope. Accessing it outside raises NameError.',
+misconception:'Students who pick 100 think variables defined inside functions are accessible globally. They are not.'},
+
+{sec:'c2',comp:'C2',topic:'Nested Loops',diff:'inter',type:'mc',
+stem:'How many times does \'x\' print?\n\nfor i in range(2):\n    for j in range(3):\n        print(\'x\')',code:true,
+opts:['2','3','5','6'],
+ans:3,
+rationale:'<strong>D is correct.</strong> The outer loop runs 2 times, the inner loop runs 3 times per outer iteration. Total: 2 × 3 = 6 print calls.',
+misconception:'Students who pick 5 add instead of multiply. Nested loop iterations always multiply.'},
+
+{sec:'c2',comp:'C2',topic:'break statement',diff:'inter',type:'mc',
+stem:'What does this print?\n\nfor n in range(1, 8):\n    if n % 4 == 0:\n        break\n    print(n)',code:true,
+opts:['1 2 3','1 2 3 4','4 5 6 7','1 2 3 5 6 7'],
+ans:0,
+rationale:'<strong>A is correct.</strong> The loop prints n until n % 4 == 0. When n=4, break fires immediately — before print(n). So only 1, 2, 3 print.',
+misconception:'Students who pick B think print(n) runs before the break check. The if block runs first.'},
+
+{sec:'c2',comp:'C2',topic:'Keyword Arguments',diff:'adv',type:'mc',
+stem:'What prints?\n\ndef describe(name, age, city=\'Unknown\'):\n    print(f\'{name}, {age}, {city}\')\ndescribe(age=30, name=\'Jin\')',code:true,
+opts:['Jin, 30, Unknown','Jin, 30','name, age, Unknown','TypeError'],
+ans:0,
+rationale:'<strong>A is correct.</strong> Keyword arguments can be passed in any order. age=30 and name=\'Jin\' map correctly. city uses its default \'Unknown\'.',
+misconception:'Students who pick D think mixing keyword order causes a TypeError. Python maps keyword args by name, not position.'},
+
+{sec:'c2',comp:'C2',topic:'Accumulator Pattern',diff:'adv',type:'mc',
+stem:'What does this print?\n\ndata = [4, 7, 2, 9, 1]\ntotal = 0\nfor val in data:\n    if val > 5:\n        total += val\nprint(total)',code:true,
+opts:['23','16','13','7'],
+ans:1,
+rationale:'<strong>B is correct.</strong> Values > 5: 7 and 9. total = 0 + 7 + 9 = 16. 4, 2, and 1 are skipped.',
+misconception:'Students who pick 23 summed all values. Students who pick 13 included 4 as >5 (it is not).'},
+];
+
+// ── SECTION 4: C3 Targeted Test (10 q from your PDF) ─────────────
+const C3=[
+{sec:'c3',comp:'C3',topic:'import statement',diff:'found',type:'mc',
+stem:'Which correctly imports the math module and prints pi to 4 decimal places?',
+opts:['include math — print(round(math.pi, 4))','import math — print(round(math.pi, 4))','from math import * — print(round(pi, 4))','Both B and C are correct'],
+ans:3,
+rationale:'<strong>D is correct.</strong> Both are valid. <code>import math</code> requires the <code>math.</code> prefix. <code>from math import *</code> pulls everything into scope, allowing <code>pi</code> directly. Both produce the same output.',
+misconception:'Students who pick B alone miss that C is also correct. The question is specifically testing awareness of both import styles.'},
+
+{sec:'c3',comp:'C3',topic:'try/except syntax',diff:'found',type:'mc',
+stem:'Java/C++ use <code>catch</code>. Python\'s equivalent keyword for handling exceptions is:',
+opts:['catch','handle','except','rescue'],
+ans:2,
+rationale:'<strong>C is correct.</strong> Python\'s keyword is <code>except</code>. A <code>try</code> block is paired with one or more <code>except</code> clauses to handle specific exception types.',
+misconception:'Students with Java/C++ background default to \'catch\'. Python made a deliberate language choice to use \'except\'.'},
+
+{sec:'c3',comp:'C3',topic:'File mode r',diff:'found',type:'mc',
+stem:'What happens when you try to open a file that does not exist using mode <code>\'r\'</code>?',
+opts:['Python creates a new empty file','Python returns None','Python raises FileNotFoundError','Python opens the file in write mode instead'],
+ans:2,
+rationale:'<strong>C is correct.</strong> Mode \'r\' is read-only and requires the file to exist. If it doesn\'t, Python raises <code>FileNotFoundError</code>. Use \'w\' or \'a\' to create a file.',
+misconception:'Students pick A thinking Python is helpful and creates the file. Only \'w\' and \'a\' modes create files.'},
+
+{sec:'c3',comp:'C3',topic:'math module',diff:'inter',type:'mc',
+stem:'What does this print?\n\nimport math\nprint(math.ceil(4.2))\nprint(math.floor(4.8))',code:true,
+opts:['4 / 4','5 / 4','5 / 5','4 / 5'],
+ans:1,
+rationale:'<strong>B is correct.</strong> <code>math.ceil()</code> rounds up: ceil(4.2)=5. <code>math.floor()</code> rounds down: floor(4.8)=4.',
+misconception:'Students swap ceil and floor. Ceil=ceiling (always up), floor=floor (always down).'},
+
+{sec:'c3',comp:'C3',topic:'ValueError in except',diff:'inter',type:'mc',
+stem:'What prints if the user types \'hello\'?\n\ntry:\n    n = int(input(\'Enter: \'))\n    print(n * 2)\nexcept ValueError:\n    print(\'Invalid input\')',code:true,
+opts:['hellohello','Invalid input','0','Unhandled ValueError crash'],
+ans:1,
+rationale:'<strong>B is correct.</strong> <code>int(\'hello\')</code> raises ValueError. The except block catches it and prints \'Invalid input\'. The program does not crash.',
+misconception:'Students pick D thinking ValueError is unhandled. The except clause explicitly catches it.'},
+
+{sec:'c3',comp:'C3',topic:'strip() on file lines',diff:'inter',type:'mc',
+stem:'What does <code>.strip()</code> accomplish when reading file lines?\n\nwith open(\'data.txt\',\'r\') as f:\n    for line in f:\n        print(line.strip())',code:true,
+opts:['Converts the line to uppercase','Removes the file\'s header row','Removes leading and trailing whitespace including the newline','Splits the line into a list'],
+ans:2,
+rationale:'<strong>C is correct.</strong> Each line from a file ends with \'\\n\'. <code>.strip()</code> removes that newline (and any leading/trailing spaces), producing clean output.',
+misconception:'Students pick D thinking strip() works like split(). strip() trims edges; split() divides into parts.'},
+
+{sec:'c3',comp:'C3',topic:'random.choice()',diff:'inter',type:'mc',
+stem:'What does <code>random.choice()</code> do?\n\nimport random\nprint(random.choice([\'rock\',\'paper\',\'scissors\']))',code:true,
+opts:['Always returns the first element','Returns a random element from the sequence','Shuffles the list and returns it','Returns a random integer'],
+ans:1,
+rationale:'<strong>B is correct.</strong> <code>random.choice(seq)</code> selects and returns one random element from any non-empty sequence. The list itself is unchanged.',
+misconception:'Students pick C confusing choice() with shuffle(). shuffle() modifies the list in-place and returns None.'},
+
+{sec:'c3',comp:'C3',topic:'File mode a vs w',diff:'inter',type:'mc',
+stem:'What is the difference between <code>open(\'file.txt\',\'w\')</code> and <code>open(\'file.txt\',\'a\')</code>?',
+opts:['No difference — both overwrite','\'w\' overwrites all content; \'a\' appends without deleting','\'a\' creates the file; \'w\' opens existing','\'w\' is write-protected; \'a\' allows all operations'],
+ans:1,
+rationale:'<strong>B is correct.</strong> \'w\' (write) truncates the file to zero bytes before writing — existing content is destroyed. \'a\' (append) positions the cursor at the end, preserving all existing content.',
+misconception:'Students pick A thinking both modes write. The critical difference is what happens to existing content.'},
+
+{sec:'c3',comp:'C3',topic:'finally block',diff:'adv',type:'mc',
+stem:'What prints?\n\ntry:\n    x = int(\'abc\')\nexcept ValueError:\n    print(\'Error caught\')\nfinally:\n    print(\'Cleanup done\')',code:true,
+opts:['Error caught only','Cleanup done only','Error caught — then Cleanup done','Nothing — exception causes a crash'],
+ans:2,
+rationale:'<strong>C is correct.</strong> \'Error caught\' prints from the except block. Then <code>finally</code> executes unconditionally — even after an exception is handled.',
+misconception:'Students who pick A don\'t know about finally. Students who pick D think the except block doesn\'t handle it — but it explicitly catches ValueError.'},
+
+{sec:'c3',comp:'C3',topic:'CSV processing',diff:'adv',type:'mc',
+stem:'A CSV line reads: <code>\'Torres,85,pass\'</code>. After <code>line.strip().split(\',\')</code>, which expression gets the grade as an integer?',
+opts:['int(parts[0])','int(parts[1])','int(parts[2])','parts[1]'],
+ans:1,
+rationale:'<strong>B is correct.</strong> split(\',\') produces [\'Torres\', \'85\', \'pass\']. Index 0=name, index 1=grade string. <code>int(parts[1])</code> converts \'85\' to integer 85.',
+misconception:'Students who pick D get \'85\' as a string, not an integer. Always wrap with int() when you need numeric operations.'},
+];
+
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
+const ALL={gen:GEN, c1:C1, c2:C2, c3:C3};
+const STATE={gen:{}, c1:{}, c2:{}, c3:{}};
+const FILLS={gen:{}, c1:{}, c2:{}, c3:{}};
+const SELS={gen:{}, c1:{}, c2:{}, c3:{}};
+let curSec='gen', curQ=0;
+
+// ═══════════════════════════════════════════════════════════════════
+// SCORE
+// ═══════════════════════════════════════════════════════════════════
+function calcSection(key){
+  const qs=ALL[key], st=STATE[key];
+  let done=0,right=0;
+  qs.forEach((_,i)=>{if(st[i]!==undefined){done++;if(st[i])right++;}});
+  return{done,right,total:qs.length};
+}
+function updateScore(){
+  let tot=0,right=0,done=0;
+  Object.keys(ALL).forEach(k=>{const r=calcSection(k);tot+=r.total;done+=r.done;right+=r.right;});
+  const pct=done>0?Math.round(right/tot*100):null;
+  document.getElementById('sc-tot').innerHTML=done+'<span style="font-size:13px;color:#9b9b97">/'+tot+'</span>';
+  document.getElementById('sc-right').textContent=right;
+  document.getElementById('sc-wrong').textContent=done-right;
+  document.getElementById('sc-pct').textContent=pct!==null?pct+'%':'—';
+  const passing=pct!==null&&pct>=80;
+  document.getElementById('sc-pass').textContent=pct===null?'—':passing?'Yes ✓':'Not yet';
+  document.getElementById('sc-pass').style.color=pct===null?'#9b9b97':passing?'#1D9E75':'#A32D2D';
+  document.getElementById('prog').style.width=(done/tot*100)+'%';
+  document.getElementById('prog-txt').textContent=done+' of '+tot+' answered';
+  document.getElementById('pass-note').textContent=passing?'On track to pass':'';
+  updateSumCards();
+  updateBreakdown();
+  buildTabs();
+}
+
+function updateSumCards(){
+  const grid=document.getElementById('sum-grid');
+  grid.innerHTML='';
+  SECTIONS.forEach(sec=>{
+    const r=calcSection(sec.key);
+    const pct=r.done>0?Math.round(r.right/r.total*100):null;
+    const passing=pct!==null&&pct>=80;
+    const card=document.createElement('div');
+    card.className='sum-card';
+    card.style.cursor='pointer';
+    card.onclick=()=>switchSection(sec.key);
+    card.innerHTML=`<div class="sum-title">${sec.label.replace(/&amp;/g,'&')}</div>
+      <div class="sum-num" style="color:${pct===null?'#1a1a1a':passing?'#1D9E75':'#A32D2D'}">${pct!==null?pct+'%':'—'}</div>
+      <div class="sum-sub">${r.done}/${r.total} answered</div>`;
+    grid.appendChild(card);
+  });
+}
+
+function updateBreakdown(){
+  const rows=document.getElementById('bd-rows');
+  rows.innerHTML='';
+  const cats=[
+    {label:'C1 — Basic Scripts',filter:q=>q.comp==='C1',color:'#1D9E75'},
+    {label:'C2 — Control Flow',filter:q=>q.comp==='C2',color:'#185FA5'},
+    {label:'C3 — Packages',filter:q=>q.comp==='C3',color:'#534AB7'},
+    {label:'Foundational',filter:q=>q.diff==='found',color:'#3B6D11'},
+    {label:'Intermediate',filter:q=>q.diff==='inter',color:'#854F0B'},
+    {label:'Advanced',filter:q=>q.diff==='adv',color:'#A32D2D'},
+    {label:'File I/O',filter:q=>q.topic&&q.topic.includes('File'),color:'#0C447C'},
+    {label:'Lists',filter:q=>q.topic&&q.topic.includes('List')||q.topic==='Lists',color:'#712B13'},
+  ];
+  const allQs=[...GEN,...C1,...C2,...C3];
+  const allSt={};
+  let offset=0;
+  [GEN,C1,C2,C3].forEach((arr,si)=>{
+    const key=['gen','c1','c2','c3'][si];
+    arr.forEach((_,i)=>{allSt[offset+i]=STATE[key][i];});
+    offset+=arr.length;
+  });
+  cats.forEach(cat=>{
+    let offset2=0,right=0,done=0,total=0;
+    [GEN,C1,C2,C3].forEach((arr,si)=>{
+      const key=['gen','c1','c2','c3'][si];
+      arr.forEach((q,i)=>{
+        if(cat.filter(q)){total++;if(STATE[key][i]!==undefined){done++;if(STATE[key][i])right++;}}
+      });
+    });
+    const pct=done>0?Math.round(right/total*100):0;
+    rows.innerHTML+=`<div class="bd-row">
+      <span class="bd-label">${cat.label}</span>
+      <div class="bd-bar-wrap"><div class="bd-bar" style="width:${pct}%;background:${cat.color}"></div></div>
+      <span class="bd-pct">${done>0?pct+'%':'—'}</span>
+      <span class="bd-score">${right}/${total}</span>
+    </div>`;
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════════
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function fmtStem(raw){
+  return raw.split('\n')[0]
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/`([^`]+)`/g,'<code>$1</code>')
+    .replace(/&lt;code&gt;/g,'<code>').replace(/&lt;\/code&gt;/g,'</code>');
+}
+
+function buildSectionNav(){
+  const row=document.getElementById('sec-row');
+  row.innerHTML='';
+  SECTIONS.forEach(sec=>{
+    const r=calcSection(sec.key);
+    const pct=r.done>0?Math.round(r.right/r.total*100):null;
+    const b=document.createElement('button');
+    b.className='sec-btn'+(curSec===sec.key?' active':'');
+    b.innerHTML=sec.label+'<span class="sec-count">'+(pct!==null?pct+'%':r.total+'q')+'</span>';
+    b.onclick=()=>switchSection(sec.key);
+    row.appendChild(b);
+  });
+}
+
+function switchSection(key){
+  curSec=key; curQ=0;
+  buildSectionNav();
+  render();
+}
+
+function buildTabs(){
+  const row=document.getElementById('tabs');
+  row.innerHTML='';
+  const qs=ALL[curSec], st=STATE[curSec];
+  qs.forEach((q,i)=>{
+    const b=document.createElement('button');
+    let cls='t-btn'+(i===curQ?' active':'');
+    if(st[i]===true)cls+=' correct';
+    else if(st[i]===false)cls+=' wrong';
+    b.className=cls;
+    b.textContent='Q'+(i+1);
+    b.onclick=()=>{curQ=i;render();};
+    row.appendChild(b);
+  });
+}
+
+function render(){
+  buildSectionNav();
+  buildTabs();
+  const qs=ALL[curSec], q=qs[curQ];
+  const st=STATE[curSec], done=st[curQ]!==undefined, correct=st[curQ]===true;
+  const diffMap={found:'Foundational',inter:'Intermediate',adv:'Advanced'};
+  const diffCls={found:'d-found',inter:'d-inter',adv:'d-adv'};
+  const compColor={C1:'p-c1',C2:'p-c2',C3:'p-c3'};
+
+  let h=`<div class="q-card">
+    <div class="q-meta">
+      <span class="pill ${compColor[q.comp]||'p-gen'}">${q.comp}</span>
+      <span class="diff-badge ${diffCls[q.diff]}">${diffMap[q.diff]}</span>
+      <span class="pill p-gen">${q.topic}</span>
+      <span class="q-num">Question ${curQ+1} of ${qs.length}</span>
+    </div>
+    <div class="q-stem">${fmtStem(q.stem)}</div>`;
+
+  if(q.code){
+    const codeLines=q.stem.split('\n').slice(1).join('\n').trim();
+    if(codeLines) h+=`<div class="code-block">${esc(codeLines)}</div>`;
+  }
+
+  if(q.type==='mc'){
+    const letters=['A','B','C','D'];
+    h+=`<div class="opt-list">`;
+    q.opts.forEach((opt,oi)=>{
+      let cls='opt-btn';
+      if(done){if(oi===q.ans)cls+=' reveal-correct';else if(SELS[curSec][curQ]===oi)cls+=' selected-wrong';}
+      const dispOpt=String(opt).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/`([^`]+)`/g,'<code>$1</code>')
+        .replace(/&lt;code&gt;/g,'<code>').replace(/&lt;\/code&gt;/g,'</code>');
+      h+=`<button class="${cls}" ${done?'disabled':''} onclick="pickMC(${oi})"><strong>${letters[oi]}.</strong> ${dispOpt}</button>`;
+    });
+    h+=`</div>`;
+  } else {
+    const saved=esc(FILLS[curSec][curQ]||'');
+    const fcls='fill-inp'+(done?(correct?' correct':' wrong'):'');
+    h+=`<div class="fill-row">
+      <input class="${fcls}" id="fill-inp" type="text" placeholder="method name..." value="${saved}" ${done?'disabled':''}>
+      ${!done?'<button class="btn-sub" onclick="submitFill()">Check answer</button>':''}
+    </div>`;
+  }
+
+  if(done){
+    h+=`<div class="feedback ${correct?'fb-c':'fb-w'}">
+      <strong>${correct?'&#10003; Correct':'&#10007; Incorrect'}</strong> — ${q.rationale}
+      ${q.misconception?`<div class="misconception">Instructor note: ${q.misconception}</div>`:''}
+    </div>`;
+  }
+  h+=`</div>`;
+  document.getElementById('qview').innerHTML=h;
+  document.getElementById('q-label').textContent='Questions — '+(curSec==='gen'?'Knowledge Checks':curSec.toUpperCase()+' Targeted Test');
+
+  if(q.type==='fill'&&!done){
+    const inp=document.getElementById('fill-inp');
+    if(inp){
+      inp.addEventListener('keydown',e=>{if(e.key==='Enter')submitFill();});
+      inp.addEventListener('input',()=>{FILLS[curSec][curQ]=inp.value;});
+    }
+  }
+  updateScore();
+}
+
+function pickMC(oi){
+  const q=ALL[curSec][curQ];
+  if(STATE[curSec][curQ]!==undefined) return;
+  SELS[curSec][curQ]=oi;
+  STATE[curSec][curQ]=oi===q.ans;
+  render();
+}
+function submitFill(){
+  const inp=document.getElementById('fill-inp');
+  if(!inp) return;
+  FILLS[curSec][curQ]=inp.value;
+  const q=ALL[curSec][curQ];
+  STATE[curSec][curQ]=inp.value.trim().toLowerCase()===String(q.ans).toLowerCase();
+  render();
+}
+function go(d){
+  const max=ALL[curSec].length-1;
+  curQ=Math.max(0,Math.min(max,curQ+d));
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// SIMULATED EXAM SECTION — 12 auto-graded coding-concept questions
+// Each question tests the SAME competency as the practice exam PDF
+// but uses MC + output-prediction format for auto-grading
+// ═══════════════════════════════════════════════════════════════════
+
+const SIM = [
+
+// ── Q1 mirror: String manipulation / arithmetic / f-string ──────
+{sec:'sim',comp:'C1',topic:'String / Arithmetic',diff:'inter',type:'mc',
+stem:'A student writes the following price-calculator code. What is the EXACT output?\n\nname = "Laptop"\nprice = 1000\ndiscount = 15\namount_off = price * (discount / 100)\nfinal = price - amount_off\nprint(f"Product: {name}")\nprint(f"Original: ${price:.2f}")\nprint(f"Discount: {discount}%")\nprint(f"Amount Off: ${amount_off:.2f}")\nprint(f"Final Price: ${final:.2f}")',code:true,
+opts:[
+'Product: Laptop\nOriginal: $1000\nDiscount: 15%\nAmount Off: $150\nFinal Price: $850',
+'Product: Laptop\nOriginal: $1000.00\nDiscount: 15%\nAmount Off: $150.00\nFinal Price: $850.00',
+'Product: Laptop\nOriginal: $1000.00\nDiscount: 0.15%\nAmount Off: $150.00\nFinal Price: $850.00',
+'TypeError — cannot format int with :.2f'
+],
+ans:1,
+rationale:'<strong>B is correct.</strong> <code>:.2f</code> forces exactly 2 decimal places on floats. <code>price</code> is an int but f-string <code>:.2f</code> still formats it as 1000.00. <code>discount</code> uses <code>{discount}%</code> with no format spec, so it prints as the raw integer 15.',
+misconception:'Students pick A forgetting the :.2f spec. Students pick D incorrectly thinking :.2f only works on float variables.'},
+
+// ── Q1b: what breaks the f-string version ───────────────────────
+{sec:'sim',comp:'C1',topic:'String / Arithmetic',diff:'adv',type:'mc',
+stem:'A student changes one line to:\n\nprint(f"Amount Off: $" + amount_off + ":.2f")\n\nWhat happens?',code:true,
+opts:[
+'Prints: Amount Off: $150.0:.2f',
+'Prints: Amount Off: $150.00',
+'TypeError: can only concatenate str (not "float") to str',
+'SyntaxError on the f-string'
+],
+ans:2,
+rationale:'<strong>C is correct.</strong> The student is no longer using an f-string expression — they are trying to concatenate a <code>float</code> directly with <code>+</code> to a string literal. Python raises <code>TypeError</code> because you cannot use <code>+</code> to join str and float.',
+misconception:'Students pick A or B thinking the format spec still applies. It does not — the :.2f inside the quote is just a literal string here.'},
+
+// ── Q2 mirror: List operations / average / min / max ────────────
+{sec:'sim',comp:'C1',topic:'Lists / Built-ins',diff:'inter',type:'mc',
+stem:'What does this code print?\n\nnums = [10, 20, 15, 30, 5]\nprint(f"Numbers: {\', \'.join(str(n) for n in nums)}")\nprint(f"Average: {round(sum(nums)/len(nums), 1)}")\nprint(f"Minimum: {min(nums)}")\nprint(f"Maximum: {max(nums)}")',code:true,
+opts:[
+'Numbers: 10 20 15 30 5\nAverage: 16\nMinimum: 5\nMaximum: 30',
+'Numbers: [10, 20, 15, 30, 5]\nAverage: 16.0\nMinimum: 5\nMaximum: 30',
+'Numbers: 10, 20, 15, 30, 5\nAverage: 16.0\nMinimum: 5\nMaximum: 30',
+'Numbers: 10, 20, 15, 30, 5\nAverage: 16\nMinimum: 5\nMaximum: 30'
+],
+ans:2,
+rationale:'<strong>C is correct.</strong> <code>\', \'.join(str(n) for n in nums)</code> produces a comma-space-separated string — not bracket notation. <code>round(80/5, 1)</code> = <code>16.0</code> — round() with ndigits=1 always returns a float.',
+misconception:'Students pick B thinking join() preserves list brackets. Students pick D thinking round(16.0,1) strips the decimal.'},
+
+// ── Q2b: what round() returns ────────────────────────────────────
+{sec:'sim',comp:'C1',topic:'Lists / Built-ins',diff:'adv',type:'fill',
+stem:'Fill in the blank. This line must print the average with exactly one decimal place.\n\nnums = [10, 20, 15, 30, 5]\nprint(f"Average: {________(sum(nums)/len(nums), 1)}")',code:true,
+ans:'round',
+rationale:'<strong>round</strong> is correct. <code>round(value, ndigits)</code> rounds to the specified number of decimal places and returns a float when ndigits > 0.',
+misconception:'Students write int() or float() — neither controls decimal precision. Only round() does.'},
+
+// ── Q3 mirror: split / max / min / reversed ─────────────────────
+{sec:'sim',comp:'C1',topic:'String Methods',diff:'inter',type:'mc',
+stem:'What does this print?\n\nsentence = "The quick brown fox jumps"\nwords = sentence.split()\nprint(f"Total words: {len(words)}")\nprint(f"Longest word: {max(words, key=len)}")\nprint(f"Shortest word: {min(words, key=len)}")\nprint(f"Reversed: {\' \'.join(reversed(words))}")',code:true,
+opts:[
+'Total words: 5\nLongest word: jumps\nShortest word: fox\nReversed: jumps fox brown quick The',
+'Total words: 5\nLongest word: quick\nShortest word: The\nReversed: jumps fox brown quick The',
+'Total words: 4\nLongest word: quick\nShortest word: The\nReversed: The quick brown fox jumps',
+'Total words: 5\nLongest word: brown\nShortest word: The\nReversed: jumps fox brown quick The'
+],
+ans:1,
+rationale:'<strong>B is correct.</strong> split() on spaces gives 5 words. max(key=len): quick and brown and jumps are all 5 chars — max() returns the FIRST one encountered, which is "quick". min(key=len): "The" and "fox" are 3 chars — first encountered is "The". reversed() returns words in reverse order joined by spaces.',
+misconception:'Students pick A thinking "jumps" is longest because it comes last. max(key=len) returns the first maximum, not the last.'},
+
+// ── Q4 mirror: if/elif/else grade logic ──────────────────────────
+{sec:'sim',comp:'C2',topic:'Conditionals',diff:'inter',type:'mc',
+stem:'A student calculates avg = round((72 + 68 + 74) / 3, 2). Which grade and message are printed?\n\nif avg >= 90:\n    grade, msg = "A", "Excellent!"\nelif avg >= 80:\n    grade, msg = "B", "Good work"\nelif avg >= 70:\n    grade, msg = "C", "Satisfactory"\nelif avg >= 60:\n    grade, msg = "D", "Needs improvement"\nelse:\n    grade, msg = "F", "See me after class"\nprint(f"Average: {avg}")\nprint(f"Grade: {grade}")\nprint(f"Message: {msg}")',code:true,
+opts:[
+'Average: 71.33\nGrade: C\nMessage: Satisfactory',
+'Average: 71.33\nGrade: D\nMessage: Needs improvement',
+'Average: 72.0\nGrade: C\nMessage: Satisfactory',
+'Average: 71.33\nGrade: B\nMessage: Good work'
+],
+ans:0,
+rationale:'<strong>A is correct.</strong> (72+68+74)/3 = 214/3 = 71.333... round(...,2) = 71.33. 71.33 >= 70 is True, so grade=C, msg=Satisfactory.',
+misconception:'Students pick B thinking 71.33 falls in the 60s. It is >= 70, so C applies. Students pick C incorrectly computing the average.'},
+
+// ── Q5 mirror: while loop / menu / break ─────────────────────────
+{sec:'sim',comp:'C2',topic:'while / break',diff:'inter',type:'mc',
+stem:'In the calculator menu program, a student accidentally writes the break inside the else block instead of the choice==3 block:\n\nwhile True:\n    choice = int(input("Choose: "))\n    if choice == 1:\n        print("Add")\n    elif choice == 2:\n        print("Subtract")\n    elif choice == 3:\n        print("Goodbye!")\n    else:\n        print("Invalid")\n        break\n\nWhat happens when the user enters 3?',
+opts:[
+'Prints "Goodbye!" and exits',
+'Prints "Goodbye!" and loops again',
+'Prints "Invalid" and exits',
+'Prints nothing and loops forever'
+],
+ans:1,
+rationale:'<strong>B is correct.</strong> The <code>break</code> is inside the <code>else</code> block, not the <code>elif choice==3</code> block. When the user enters 3, the elif fires, prints "Goodbye!", then the loop continues — it does NOT hit the else/break. The loop runs forever unless an invalid number is entered.',
+misconception:'Students pick A assuming break is in the right place. This question tests whether students can trace where break actually lives in the indentation structure.'},
+
+// ── Q6 mirror: nested loops / multiplication table ───────────────
+{sec:'sim',comp:'C2',topic:'Nested Loops',diff:'inter',type:'mc',
+stem:'What is the output of this nested loop (n=3)?\n\nn = 3\nfor i in range(1, n+1):\n    for j in range(1, n+1):\n        print(f"{i*j:3d}", end="")\n    print()',code:true,
+opts:[
+'  1  2  3\n  2  4  6\n  3  6  9',
+'1 2 3\n2 4 6\n3 6 9',
+'  1  4  9\n  2  5  8\n  3  6  7',
+'  3  6  9\n  6  9 12\n  9 12 15'
+],
+ans:0,
+rationale:'<strong>A is correct.</strong> <code>{i*j:3d}</code> right-aligns each product in 3 spaces. Row i=1: 1×1=1, 1×2=2, 1×3=3. Row i=2: 2×1=2, 2×2=4, 2×3=6. Row i=3: 3×1=3, 3×2=6, 3×3=9. Each number is padded to 3 chars.',
+misconception:'Students pick B forgetting the :3d format spec adds leading spaces. Students pick C confusing i*j with i²+j patterns.'},
+
+// ── Q7 mirror: list classification / positive-negative-zero ──────
+{sec:'sim',comp:'C2',topic:'List Processing',diff:'inter',type:'mc',
+stem:'What does this code print?\n\nnums = [5, -3, 0, 8, -1, 0, 12, -4, 3, 0]\npos = [x for x in nums if x > 0]\nneg = [x for x in nums if x < 0]\nzeros = [x for x in nums if x == 0]\nprint(f"Positive count: {len(pos)}")\nprint(f"Negative count: {len(neg)}")\nprint(f"Zero count: {len(zeros)}")',code:true,
+opts:[
+'Positive count: 4\nNegative count: 3\nZero count: 3',
+'Positive count: 3\nNegative count: 3\nZero count: 4',
+'Positive count: 4\nNegative count: 4\nZero count: 2',
+'Positive count: 5\nNegative count: 3\nZero count: 2'
+],
+ans:0,
+rationale:'<strong>A is correct.</strong> Positives (>0): 5,8,12,3 → 4. Negatives (<0): -3,-1,-4 → 3. Zeros (==0): 0,0,0 → 3.',
+misconception:'Students miscount zero — there are three zeros at indices 2,5,9. Students picking B or C miscounted one category.'},
+
+// ── Q8 mirror: vowel counting / string processing ────────────────
+{sec:'sim',comp:'C2',topic:'String / Loops',diff:'inter',type:'mc',
+stem:'What is the output for the word "programming"?\n\nword = "programming"\nvowels = sum(1 for ch in word if ch.lower() in "aeiou")\nconsonants = sum(1 for ch in word if ch.isalpha() and ch.lower() not in "aeiou")\ntotal = vowels + consonants\npct = round(vowels / total * 100, 1)\nprint(f"Vowels: {vowels}")\nprint(f"Consonants: {consonants}")\nprint(f"Vowel percentage: {pct}%")\nprint(f"Vowels: {\'*\' * vowels}")\nprint(f"Consonants: {\'*\' * consonants}")',code:true,
+opts:[
+'Vowels: 3\nConsonants: 8\nVowel percentage: 27.3%\nVowels: ***\nConsonants: ********',
+'Vowels: 4\nConsonants: 7\nVowel percentage: 36.4%\nVowels: ****\nConsonants: *******',
+'Vowels: 3\nConsonants: 8\nVowel percentage: 27.0%\nVowels: ***\nConsonants: ********',
+'Vowels: 2\nConsonants: 9\nVowel percentage: 18.2%\nVowels: **\nConsonants: *********'
+],
+ans:0,
+rationale:'<strong>A is correct.</strong> "programming" = p-r-o-g-r-a-m-m-i-n-g. Vowels: o,a,i → 3. Consonants: p,r,g,r,m,m,n,g → 8. Total=11. 3/11*100 = 27.272... round to 1 decimal = 27.3%.',
+misconception:'Students who pick B count "in" as two vowels (i,n) — n is a consonant. Carefully trace each character.'},
+
+// ── Q9 mirror: function definition / temperature ─────────────────
+{sec:'sim',comp:'C3',topic:'Functions / Modules',diff:'inter',type:'mc',
+stem:'A student defines this function incorrectly:\n\ndef celsius_to_fahrenheit(c):\n    return c * 9 / 5 + 32\n\nprint(celsius_to_fahrenheit(0))\nprint(celsius_to_fahrenheit(100))',code:true,
+opts:[
+'32\n212',
+'32.0\n212.0',
+'32.0\n213.0',
+'SyntaxError — operator precedence issue'
+],
+ans:1,
+rationale:'<strong>B is correct.</strong> Python evaluates <code>c * 9 / 5 + 32</code> left-to-right: (c*9)/5 + 32 due to equal precedence of * and /. For c=0: 0/5+32=32.0. For c=100: 900/5+32=180+32=212.0. Division always returns float in Python 3.',
+misconception:'Students pick A thinking int output. Division (/) always returns float in Python 3 even when the result is a whole number.'},
+
+// ── Q10 mirror: math module / circle functions ───────────────────
+{sec:'sim',comp:'C3',topic:'math module',diff:'inter',type:'mc',
+stem:'What does this print?\n\nimport math\n\ndef circle_area(r):\n    return math.pi * r ** 2\n\ndef circle_circumference(r):\n    return 2 * math.pi * r\n\nradii = [5, 3, 7]\ntotal = 0\nfor r in radii:\n    a = round(circle_area(r), 2)\n    c = round(circle_circumference(r), 2)\n    total += a\n    print(f"Radius {r}: Area={a}, Circumference={c}")\nprint(f"Total area: {round(total, 2)}")',code:true,
+opts:[
+'Radius 5: Area=78.54, Circumference=31.42\nRadius 3: Area=28.27, Circumference=18.85\nRadius 7: Area=153.94, Circumference=43.98\nTotal area: 261.75',
+'Radius 5: Area=78.5, Circumference=31.4\nRadius 3: Area=28.3, Circumference=18.8\nRadius 7: Area=153.9, Circumference=44.0\nTotal area: 260.7',
+'Radius 5: Area=78.54, Circumference=31.42\nRadius 3: Area=28.27, Circumference=18.85\nRadius 7: Area=153.94, Circumference=43.98\nTotal area: 260.75',
+'Radius 5: Area=75.0, Circumference=30.0\nRadius 3: Area=27.0, Circumference=18.0\nRadius 7: Area=147.0, Circumference=42.0\nTotal area: 249.0'
+],
+ans:0,
+rationale:'<strong>A is correct.</strong> π×5²=78.5398→78.54. 2π×5=31.4159→31.42. π×3²=28.2743→28.27. 2π×3=18.8495→18.85. π×7²=153.938→153.94. 2π×7=43.9822→43.98. Total: 78.54+28.27+153.94=260.75 → round to 2 decimals = 260.75. Wait — 78.54+28.27=106.81+153.94=260.75. Answer C says 260.75 — re-check: 78.54+28.27=106.81; 106.81+153.94=260.75. So answer should be A with 261.75? Let\'s recompute: π×25=78.53981..., round=78.54. π×9=28.27433..., round=28.27. π×49=153.93804..., round=153.94. Sum of rounded: 78.54+28.27+153.94=260.75. The code accumulates the ROUNDED values (total+=a where a is already rounded), so total=260.75, round(260.75,2)=260.75.',
+ans:2,
+rationale:'<strong>C is correct.</strong> The code accumulates <code>a</code> which is already rounded: 78.54+28.27+153.94=260.75. round(260.75,2)=260.75. Option A shows 261.75 which would result from using unrounded intermediate values.',
+misconception:'Students pick A — the total looks right at first glance, but the code sums the already-rounded area values. 78.54+28.27+153.94 = 260.75, not 261.75.'},
+
+// ── Q12 mirror: random / grade_letter / data analysis ────────────
+{sec:'sim',comp:'C3',topic:'Functions / random',diff:'adv',type:'mc',
+stem:'A student defines this grade function and applies it:\n\ndef grade_letter(score):\n    if score >= 90: return "A"\n    elif score >= 80: return "B"\n    elif score >= 70: return "C"\n    elif score >= 60: return "D"\n    else: return "F"\n\nscores = [95, 82, 71, 55, 88, 63, 91, 74, 60, 45]\ncounts = {"A":0,"B":0,"C":0,"D":0,"F":0}\nfor s in scores:\n    counts[grade_letter(s)] += 1\nprint(counts)',code:true,
+opts:[
+"{'A': 2, 'B': 2, 'C': 2, 'D': 2, 'F': 2}",
+"{'A': 2, 'B': 2, 'C': 3, 'D': 2, 'F': 1}",
+"{'A': 2, 'B': 2, 'C': 2, 'D': 3, 'F': 1}",
+"{'A': 3, 'B': 2, 'C': 2, 'D': 2, 'F': 1}"
+],
+ans:0,
+rationale:'<strong>A is correct.</strong> Trace each score: 95→A, 82→B, 71→C, 55→F, 88→B, 63→D, 91→A, 74→C, 60→D, 45→F. A=2, B=2, C=2, D=2, F=2. Each grade appears exactly twice. Key boundary: 60 is >= 60 so it maps to D, not F.',
+misconception:'Students who pick B, C, or D mis-traced at least one boundary. The critical trap: 60 exactly hits >= 60, so it is D not F.'},
+];
+
+// ─── Inject SIM into ALL and STATE ──────────────────────────────
+ALL['sim'] = SIM;
+STATE['sim'] = {};
+FILLS['sim'] = {};
+SELS['sim'] = {};
+
+// ─── Add sim to SECTIONS array ──────────────────────────────────
+SECTIONS.push({key:'sim', label:'Simulated exam', color:'#D85A30', short:'Sim'});
+
+// ─── Rebuild section nav immediately ────────────────────────────
+buildSectionNav();
+updateScore();
+</script>
+
+
+<script>
+// ══════════════════════════════════════════════════════════
+// NOW YOU DO IT — 12 coding challenges
+// ══════════════════════════════════════════════════════════
+
+var NYDI_Q = [
+{comp:'C1',topic:'String / Arithmetic',diff:'inter',
+title:'Discount price calculator',
+prompt:'Write a Python program that:\n• Asks for a product name, original price, and discount percentage\n• Calculates the discount amount and final price\n• Prints each value with exactly 2 decimal places\n\nRequired output labels:\n  Product: [name]\n  Original: $[price]\n  Discount: [percentage]%\n  Amount Off: $[discount]\n  Final Price: $[final]',
+example:'Laptop / 1000 / 15',
+expected:'Product: Laptop\nOriginal: $1000.00\nDiscount: 15%\nAmount Off: $150.00\nFinal Price: $850.00',
+hint:'Use float() for price, int() for discount. f-strings with {value:.2f} force exactly 2 decimal places.',
+concepts:['f-string :.2f formatting','float() / int() conversion','arithmetic operators'],
+solution:'name = input("Enter product name: ")\nprice = float(input("Enter original price: "))\ndiscount = int(input("Enter discount percentage: "))\namount_off = price * (discount / 100)\nfinal = price - amount_off\nprint(f"Product: {name}")\nprint(f"Original: ${price:.2f}")\nprint(f"Discount: {discount}%")\nprint(f"Amount Off: ${amount_off:.2f}")\nprint(f"Final Price: ${final:.2f}")',
+random:false},
+
+{comp:'C1',topic:'Lists / Built-ins',diff:'inter',
+title:'List statistics collector',
+prompt:'Write a Python program that:\n• Uses a loop to collect 5 numbers from the user (one at a time)\n• Stores them in a list\n• Prints numbers comma-separated, average (1 decimal), minimum, and maximum\n\nOutput format:\n  Numbers: 10, 20, 15, 30, 5\n  Average: 16.0\n  Minimum: 5\n  Maximum: 30',
+example:'10 / 20 / 15 / 30 / 5',
+expected:'Numbers: 10, 20, 15, 30, 5\nAverage: 16.0\nMinimum: 5\nMaximum: 30',
+hint:"Use for i in range(1,6). append() each input. ', '.join(str(x) for x in nums) for the Numbers line.",
+concepts:['for loop with range()','list.append()','sum() / min() / max()','round()'],
+solution:"nums = []\nfor i in range(1, 6):\n    n = float(input(f'Enter number {i}: '))\n    nums.append(n)\nprint(f\"Numbers: {', '.join(str(int(n) if n==int(n) else n) for n in nums)}\")\nprint(f'Average: {round(sum(nums)/len(nums), 1)}')\nprint(f'Minimum: {int(min(nums))}')\nprint(f'Maximum: {int(max(nums))}')",
+random:false},
+
+{comp:'C1',topic:'String Methods',diff:'inter',
+title:'Sentence word analyzer',
+prompt:'Write a Python program that:\n• Takes a full sentence from the user\n• Splits it into words\n• Prints: total word count, longest word, shortest word, and all words reversed on one line\n\nOutput format:\n  Total words: 5\n  Longest word: quick\n  Shortest word: The\n  Reversed: jumps fox brown quick The',
+example:'"The quick brown fox jumps"',
+expected:'Total words: 5\nLongest word: quick\nShortest word: The\nReversed: jumps fox brown quick The',
+hint:'Use .split(), max(words, key=len), min(words, key=len), and " ".join(reversed(words)).',
+concepts:['str.split()','max/min with key=len','reversed()','str.join()'],
+solution:"sentence = input('Enter a sentence: ')\nwords = sentence.split()\nprint(f'Total words: {len(words)}')\nprint(f'Longest word: {max(words, key=len)}')\nprint(f'Shortest word: {min(words, key=len)}')\nprint(f\"Reversed: {' '.join(reversed(words))}\")",
+random:false},
+
+{comp:'C2',topic:'Conditionals',diff:'inter',
+title:'Grade assignment system',
+prompt:'Write a program that:\n• Asks for 3 test scores\n• Calculates average (rounded to 2 decimals)\n• Assigns grade + message:\n    90-100: A / Excellent!\n    80-89:  B / Good work\n    70-79:  C / Satisfactory\n    60-69:  D / Needs improvement\n    below 60: F / See me after class\n• Prints all three scores, average, grade, and message',
+example:'85 / 90 / 88',
+expected:'Test 1: 85\nTest 2: 90\nTest 3: 88\nAverage: 87.67\nGrade: B\nMessage: Good work',
+hint:'Use round((s1+s2+s3)/3, 2) for average. Set grade and msg in if/elif/else before printing.',
+concepts:['if/elif/else','round()','f-string output','variable assignment in branches'],
+solution:"s1=float(input('Enter test 1 score: '))\ns2=float(input('Enter test 2 score: '))\ns3=float(input('Enter test 3 score: '))\navg=round((s1+s2+s3)/3,2)\nif avg>=90: grade,msg='A','Excellent!'\nelif avg>=80: grade,msg='B','Good work'\nelif avg>=70: grade,msg='C','Satisfactory'\nelif avg>=60: grade,msg='D','Needs improvement'\nelse: grade,msg='F','See me after class'\nprint(f'Test 1: {int(s1)}')\nprint(f'Test 2: {int(s2)}')\nprint(f'Test 3: {int(s3)}')\nprint(f'Average: {avg}')\nprint(f'Grade: {grade}')\nprint(f'Message: {msg}')",
+random:false},
+
+{comp:'C2',topic:'while / break',diff:'inter',
+title:'Calculator menu loop',
+prompt:'Write a program with a looping menu:\n• Shows: 1. Add  2. Subtract  3. Exit\n• For 1 or 2: asks for two numbers, prints result as: 10 + 5 = 15\n• For 3: prints Goodbye! and exits\n• For anything else: prints Invalid choice, try again\n• Menu re-shows after every operation',
+example:'1 then 10 then 5 then 3',
+expected:'Menu:\n1. Add\n2. Subtract\n3. Exit\nChoose (1-3): 1\n...\n10 + 5 = 15\n...\nGoodbye!',
+hint:'Use while True with break on choice 3. Convert numbers with float(). Use if/elif/else.',
+concepts:['while True','break','int() input conversion','nested if/elif/else'],
+solution:"while True:\n    print('Menu:')\n    print('1. Add')\n    print('2. Subtract')\n    print('3. Exit')\n    choice=int(input('Choose (1-3): '))\n    if choice==1:\n        a=float(input('Enter first number: '))\n        b=float(input('Enter second number: '))\n        print(f'{int(a)} + {int(b)} = {int(a+b)}')\n    elif choice==2:\n        a=float(input('Enter first number: '))\n        b=float(input('Enter second number: '))\n        print(f'{int(a)} - {int(b)} = {int(a-b)}')\n    elif choice==3:\n        print('Goodbye!')\n        break\n    else:\n        print('Invalid choice, try again')",
+random:false},
+
+{comp:'C2',topic:'Nested Loops',diff:'inter',
+title:'Multiplication table',
+prompt:'Write a program that:\n• Asks for a number n (1-12)\n• Prints an n x n multiplication table\n• Each number right-aligned in 3 character spaces\n\nExample for n=4:\n   1  2  3  4\n   2  4  6  8\n   3  6  9 12\n   4  8 12 16',
+example:'4',
+expected:'  1  2  3  4\n  2  4  6  8\n  3  6  9 12\n  4  8 12 16',
+hint:'Two nested for loops. print(f"{i*j:3d}", end="") in inner loop, print() after inner loop.',
+concepts:['nested for loops','range()','f-string :3d alignment','print(end="")'],
+solution:"n=int(input('Enter number (1-12): '))\nfor i in range(1,n+1):\n    for j in range(1,n+1):\n        print(f'{i*j:3d}',end='')\n    print()",
+random:false},
+
+{comp:'C2',topic:'List Processing',diff:'inter',
+title:'Number classifier',
+prompt:'Write a program that:\n• Collects 10 integers from the user\n• Classifies each as positive, negative, or zero\n• Prints count and values for each category\n\nOutput format:\n  Positive count: 4\n  Negative count: 3\n  Zero count: 3\n  Positive numbers: 5, 8, 12, 3\n  Negative numbers: -3, -1, -4\n  Zeros: 0, 0, 0',
+example:'5 / -3 / 0 / 8 / -1 / 0 / 12 / -4 / 3 / 0',
+expected:'Positive count: 4\nNegative count: 3\nZero count: 3\nPositive numbers: 5, 8, 12, 3\nNegative numbers: -3, -1, -4\nZeros: 0, 0, 0',
+hint:'Create three empty lists before the loop. Append to the right list inside if/elif/else.',
+concepts:['multiple lists','for loop with range()','list.append()','classification logic'],
+solution:"pos,neg,zeros=[],[],[]\nprint('Enter 10 integers:')\nfor i in range(1,11):\n    n=int(input(f'Enter number {i}: '))\n    if n>0: pos.append(n)\n    elif n<0: neg.append(n)\n    else: zeros.append(n)\nprint(f'Positive count: {len(pos)}')\nprint(f'Negative count: {len(neg)}')\nprint(f'Zero count: {len(zeros)}')\nprint(f\"Positive numbers: {', '.join(str(x) for x in pos)}\")\nprint(f\"Negative numbers: {', '.join(str(x) for x in neg)}\")\nprint(f\"Zeros: {', '.join(str(x) for x in zeros)}\")",
+random:false},
+
+{comp:'C2',topic:'String / Loops',diff:'inter',
+title:'Vowel histogram',
+prompt:'Write a program that:\n• Asks the user for a word\n• Counts vowels (a e i o u, case-insensitive) and consonants\n• Prints counts, vowel percentage (1 decimal), and a * bar chart\n\nOutput for "hello":\n  Vowels: 2\n  Consonants: 3\n  Vowel percentage: 40.0%\n  Vowels: **\n  Consonants: ***',
+example:'"hello"',
+expected:'Vowels: 2\nConsonants: 3\nVowel percentage: 40.0%\nVowels: **\nConsonants: ***',
+hint:"Loop over each character. Check ch.lower() in 'aeiou'. Use '*' * count for bars.",
+concepts:['for loop over string','str.lower()','in operator','round()','string multiplication'],
+solution:"word=input('Enter a word: ')\nv=0\nc=0\nfor ch in word:\n    if ch.isalpha():\n        if ch.lower() in 'aeiou': v+=1\n        else: c+=1\ntotal=v+c\npct=round(v/total*100,1) if total>0 else 0\nprint(f'Vowels: {v}')\nprint(f'Consonants: {c}')\nprint(f'Vowel percentage: {pct}%')\nprint('Vowels: '+'*'*v)\nprint('Consonants: '+'*'*c)",
+random:false},
+
+{comp:'C3',topic:'Functions',diff:'inter',
+title:'Temperature converter with statistics',
+prompt:'Write a program that:\n• Defines celsius_to_fahrenheit(c) returning (c * 9/5) + 32\n• Collects 5 Celsius temperatures\n• Converts each and prints: 0C = 32.0F\n• Prints average, warmest, and coldest in Fahrenheit',
+example:'0 / 10 / 20 / 30 / 40',
+expected:'0C = 32.0F\n10C = 50.0F\n20C = 68.0F\n30C = 86.0F\n40C = 104.0F\nAverage: 68.0F\nWarmest: 104.0F\nColdest: 32.0F',
+hint:'Define the function first. Store converted values in a list. Use sum()/len() for average.',
+concepts:['def / return','list comprehension','zip()','round()','max() / min()'],
+solution:"def c2f(c): return (c*9/5)+32\ntemps=[]\nfor i in range(1,6):\n    temps.append(float(input(f'Enter temperature {i} (C): ')))\nf=[c2f(c) for c in temps]\nfor c,fahr in zip(temps,f):\n    print(f'{int(c)}C = {round(fahr,1)}F')\nprint(f'Average: {round(sum(f)/len(f),1)}F')\nprint(f'Warmest: {round(max(f),1)}F')\nprint(f'Coldest: {round(min(f),1)}F')",
+random:false},
+
+{comp:'C3',topic:'math module',diff:'inter',
+title:'Circle calculator with math module',
+prompt:'Write a program that:\n• Imports the math module\n• Defines circle_area(r) returning pi times r squared\n• Defines circle_circumference(r) returning 2 times pi times r\n• Asks for 3 radii\n• Prints area and circumference (2 decimals) for each\n• Prints total area of all three circles',
+example:'5 / 3 / 7',
+expected:'Radius 5: Area=78.54, Circumference=31.42\nRadius 3: Area=28.27, Circumference=18.85\nRadius 7: Area=153.94, Circumference=43.98\nTotal area: 260.75',
+hint:'import math at the top. Use math.pi. Round to 2 decimals. Accumulate total as you loop.',
+concepts:['import math','math.pi','def / return','round() to 2 decimals','accumulator pattern'],
+solution:"import math\ndef circle_area(r): return math.pi*r**2\ndef circle_circ(r): return 2*math.pi*r\nradii=[float(input(f'Enter radius {i}: ')) for i in range(1,4)]\ntotal=0\nfor r in radii:\n    a=round(circle_area(r),2)\n    c=round(circle_circ(r),2)\n    total+=a\n    print(f'Radius {int(r)}: Area={a}, Circumference={c}')\nprint(f'Total area: {round(total,2)}')",
+random:false},
+
+{comp:'C3',topic:'random module',diff:'adv',
+title:'Number guessing game',
+prompt:'Write a program that:\n• Imports random\n• Generates a secret number between 1 and 100\n• Loops until the user guesses correctly\n• Prints "Too high, try again" or "Too low, try again" each wrong guess\n• On correct: prints "Correct! You found [n] in [attempts] tries"\n• Then prints performance message:\n    1-3 tries: Amazing!\n    4-6 tries: Good!\n    7-10 tries: Not bad\n    11+ tries: Keep practicing',
+example:'50 then 40 then 42 (secret=42)',
+expected:'Too high, try again\nToo low, try again\nCorrect! You found 42 in 3 tries\nAmazing!',
+hint:'Use random.randint(1,100). while True loop. Increment attempts each guess. Break when correct.',
+concepts:['import random','random.randint()','while True / break','counter variable','if/elif chain'],
+solution:"import random\nsecret=random.randint(1,100)\nattempts=0\nwhile True:\n    guess=int(input('Guess a number (1-100): '))\n    attempts+=1\n    if guess>secret: print('Too high, try again')\n    elif guess<secret: print('Too low, try again')\n    else:\n        print(f'Correct! You found {secret} in {attempts} tries')\n        if attempts<=3: print('Amazing!')\n        elif attempts<=6: print('Good!')\n        elif attempts<=10: print('Not bad')\n        else: print('Keep practicing')\n        break",
+random:true},
+
+{comp:'C3',topic:'Functions / random',diff:'adv',
+title:'Score analyzer with grade distribution',
+prompt:'Write a program that:\n• Imports random\n• Generates 20 random scores (0-100)\n• Defines grade_letter(score) returning A/B/C/D/F\n• Prints all 20 scores on one line\n• Prints average (1 decimal) and median (1 decimal)\n• Prints grade counts and a star bar chart\n\nFormat:\n  Scores: 85 92 78 ...\n  Average: 82.5\n  Median: 83.0\n  Grade distribution:\n  A: 5\n  ...\n  Visual:\n  A: *****',
+example:'(random output — no user input)',
+expected:'Scores: [20 space-separated numbers]\nAverage: XX.X\nMedian: XX.X\nGrade distribution:\nA: X\nB: X\nC: X\nD: X\nF: X\nVisual:\nA: [asterisks]\nB: [asterisks]',
+hint:'Sort scores for median. Use a dict for grade counts. Loop through grades for bar chart.',
+concepts:['import random','list comprehension','def / return','sorted()','dictionary accumulation'],
+solution:"import random\ndef grade_letter(s):\n    if s>=90: return 'A'\n    elif s>=80: return 'B'\n    elif s>=70: return 'C'\n    elif s>=60: return 'D'\n    else: return 'F'\nscores=[random.randint(0,100) for _ in range(20)]\nprint('Scores: '+' '.join(str(s) for s in scores))\navg=round(sum(scores)/len(scores),1)\ns=sorted(scores)\nn=len(s)\nmedian=round((s[n//2-1]+s[n//2])/2,1) if n%2==0 else s[n//2]\nprint(f'Average: {avg}')\nprint(f'Median: {median}')\ncounts={'A':0,'B':0,'C':0,'D':0,'F':0}\nfor sc in scores: counts[grade_letter(sc)]+=1\nprint('Grade distribution:')\nfor g,c in counts.items(): print(f'{g}: {c}')\nprint('Visual:')\nfor g,c in counts.items(): print(g+': '+'*'*c)",
+random:true}
+];
+
+// ── State ─────────────────────────────────────────────────
+var nState={}, nCode={}, nOutput={}, nHint={}, nSol={}, nCur=0;
+
+// ── Register with the main exam ───────────────────────────
+ALL['nydi']   = NYDI_Q;
+STATE['nydi'] = nState;
+SECTIONS.push({key:'nydi', label:'Now you do it', color:'#D4537E', short:'Write'});
+
+// ── Helpers ───────────────────────────────────────────────
+function nEsc(s){
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;');
+}
+function nSave(){
+  var ca=document.getElementById('n-code');
+  var oa=document.getElementById('n-out');
+  if(ca) nCode[nCur]=ca.value;
+  if(oa) nOutput[nCur]=oa.value;
+}
+function nMark(pass){
+  nSave();
+  nState[nCur]=pass;
+  STATE['nydi'][nCur]=pass;
+  nRender();
+  updateScore();
+}
+
+// ── Output grader ─────────────────────────────────────────
+function nGrade(){
+  nSave();
+  var q=NYDI_Q[nCur];
+  var userOut=(nOutput[nCur]||'').trim();
+  var el=document.getElementById('n-grade-result');
+  if(!el) return;
+  if(!userOut){
+    el.innerHTML='<div style="padding:10px 14px;border-radius:8px;background:#FAEEDA;border:0.5px solid #FAC775;font-size:13px;color:#633806">Paste your program output in Step 2 first, then click Check.</div>';
+    return;
+  }
+  if(q.random){
+    var struct=false;
+    if(q.title.indexOf('guessing')!==-1){
+      struct=/Correct!|Too high|Too low|Amazing|Good!|Not bad|Keep practicing/.test(userOut);
+    } else {
+      struct=/Scores:|Average:|Median:|Grade distribution:|Visual:/.test(userOut);
+    }
+    el.innerHTML=struct
+      ? '<div style="padding:10px 14px;border-radius:8px;background:#EAF3DE;border:0.5px solid #C0DD97;font-size:13px;color:#27500A"><strong>&#10003; Output structure correct!</strong> Random programs produce different values each run &#8212; that is expected. Click <em>Mark correct</em> if your format matches.</div>'
+      : '<div style="padding:10px 14px;border-radius:8px;background:#FCEBEB;border:0.5px solid #F7C1C1;font-size:13px;color:#791F1F"><strong>&#10007; Output structure mismatch.</strong> Check that your output includes all required labels.</div>';
+    return;
+  }
+  var expLines=q.expected.split('\n').map(function(l){return l.trim();});
+  var usrLines=userOut.split('\n').map(function(l){return l.trim();}).filter(function(l){return l.length>0;});
+  var matched=0, mismatches=[];
+  expLines.forEach(function(exp,i){
+    var usr=usrLines[i]||'(missing)';
+    if(exp===usr) matched++;
+    else mismatches.push({line:i+1,exp:exp,got:usr});
+  });
+  var pct=Math.round(matched/expLines.length*100);
+  if(pct===100){
+    el.innerHTML='<div style="padding:10px 14px;border-radius:8px;background:#EAF3DE;border:0.5px solid #C0DD97;font-size:13px;color:#27500A"><strong>&#10003; Perfect match!</strong> All '+expLines.length+' lines correct. Click <em>Mark correct</em> above.</div>';
+  } else {
+    var diffs='';
+    mismatches.slice(0,3).forEach(function(m){
+      diffs+='<div style="margin-top:7px;font-size:12px">'
+        +'<span style="color:#9b9b97">Line '+m.line+':</span><br>'
+        +'<span style="color:#27500A">Expected: </span>'
+        +'<code style="font-family:monospace;font-size:11.5px;background:rgba(0,0,0,.06);padding:1px 4px;border-radius:3px">'+nEsc(m.exp)+'</code><br>'
+        +'<span style="color:#791F1F">Got:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'
+        +'<code style="font-family:monospace;font-size:11.5px;background:rgba(0,0,0,.06);padding:1px 4px;border-radius:3px">'+nEsc(m.got)+'</code>'
+        +'</div>';
+    });
+    el.innerHTML='<div style="padding:10px 14px;border-radius:8px;background:#FCEBEB;border:0.5px solid #F7C1C1;font-size:13px;color:#791F1F">'
+      +'<strong>&#10007; '+pct+'% match</strong> &#8212; '+matched+' of '+expLines.length+' lines correct.'
+      +diffs
+      +'<div style="margin-top:8px;font-size:12px;color:#555">Fix your code in PyCharm, run again, paste new output.</div>'
+      +'</div>';
+  }
+}
+
+// ── Renderer ──────────────────────────────────────────────
+function nRender(){
+  var q=NYDI_Q[nCur];
+  var st=nState[nCur];
+  var done=(st!==undefined);
+  var passed=(st===true);
+
+  // rebuild tabs for nydi
+  var tabRow=document.getElementById('tabs');
+  tabRow.innerHTML='';
+  NYDI_Q.forEach(function(qq,i){
+    var b=document.createElement('button');
+    var cls='t-btn'+(i===nCur?' active':'');
+    if(nState[i]===true)  cls+=' correct';
+    else if(nState[i]===false) cls+=' wrong';
+    b.className=cls;
+    b.textContent='Q'+(i+1);
+    (function(idx){ b.onclick=function(){ nSave(); nCur=idx; nRender(); }; })(i);
+    tabRow.appendChild(b);
+  });
+
+  document.getElementById('q-label').textContent='Now you do it — Write the code yourself';
+
+  var compColors={C1:'p-c1',C2:'p-c2',C3:'p-c3'};
+  var diffLabels={found:'Foundational',inter:'Intermediate',adv:'Advanced'};
+  var diffCls={found:'d-found',inter:'d-inter',adv:'d-adv'};
+
+  var conceptPills='';
+  q.concepts.forEach(function(c){
+    conceptPills+='<span style="font-size:11px;padding:3px 9px;border-radius:999px;background:#EEEDFE;'
+      +'color:#534AB7;border:0.5px solid #CECBF6;font-weight:500;display:inline-block;margin:2px">'+nEsc(c)+'</span>';
+  });
+
+  var hintBox=nHint[nCur]
+    ? '<div style="background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:8px;padding:10px 14px;'
+      +'font-size:13px;color:#0C447C;margin-bottom:12px;line-height:1.6">'+nEsc(q.hint)+'</div>'
+    : '';
+
+  var solBox=nSol[nCur]
+    ? '<div style="margin-top:12px">'
+      +'<div style="font-size:11px;font-weight:500;color:#9b9b97;letter-spacing:.06em;'
+      +'text-transform:uppercase;margin-bottom:6px">Model solution</div>'
+      +'<div style="font-family:\'Courier New\',monospace;font-size:12.5px;background:#f5f5f3;'
+      +'border:0.5px solid #e0ddd6;border-radius:8px;padding:14px;white-space:pre-wrap;'
+      +'color:#1a1a1a;line-height:1.65;max-height:360px;overflow-y:auto">'+nEsc(q.solution)+'</div>'
+      +'</div>'
+    : '';
+
+  var statusBox='';
+  if(done){
+    statusBox=passed
+      ? '<div style="margin-top:10px;padding:12px 16px;border-radius:8px;background:#EAF3DE;'
+        +'border:0.5px solid #C0DD97;font-size:13px;color:#27500A">'
+        +'<strong>&#10003; Marked correct</strong> &#8212; Great work. Move to the next challenge.</div>'
+      : '<div style="margin-top:10px;padding:12px 16px;border-radius:8px;background:#FCEBEB;'
+        +'border:0.5px solid #F7C1C1;font-size:13px;color:#791F1F">'
+        +'<strong>&#10007; Marked incorrect</strong> &#8212; Review the hint and solution, fix your code, and try again.</div>';
+  }
+
+  var html=''
+    +'<div class="q-card">'
+    +'<div class="q-meta">'
+    +'<span class="pill '+(compColors[q.comp]||'p-gen')+'">'+q.comp+'</span>'
+    +'<span class="diff-badge '+(diffCls[q.diff]||'d-inter')+'">'+diffLabels[q.diff]+'</span>'
+    +'<span class="pill p-gen">'+nEsc(q.topic)+'</span>'
+    +'<span class="q-num">Challenge '+(nCur+1)+' of '+NYDI_Q.length+'</span>'
+    +'</div>'
+    +'<div style="font-size:16px;font-weight:500;color:#1a1a1a;margin-bottom:14px">'+nEsc(q.title)+'</div>'
+    +'<div style="background:#f5f5f3;border:0.5px solid #e0ddd6;border-radius:8px;padding:14px 16px;margin-bottom:12px">'
+    +'<div style="font-size:11px;font-weight:500;color:#9b9b97;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">What to build</div>'
+    +'<div style="font-size:13.5px;line-height:1.8;color:#1a1a1a;white-space:pre-wrap">'+nEsc(q.prompt)+'</div>'
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">'
+    +'<div style="background:#EAF3DE;border:0.5px solid #C0DD97;border-radius:8px;padding:12px">'
+    +'<div style="font-size:11px;font-weight:500;color:#27500A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px">Example input</div>'
+    +'<div style="font-family:\'Courier New\',monospace;font-size:12.5px;color:#27500A">'+nEsc(q.example)+'</div>'
+    +'</div>'
+    +'<div style="background:#E6F1FB;border:0.5px solid #B5D4F4;border-radius:8px;padding:12px">'
+    +'<div style="font-size:11px;font-weight:500;color:#0C447C;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px">Expected output</div>'
+    +'<div style="font-family:\'Courier New\',monospace;font-size:12px;color:#0C447C;white-space:pre">'+nEsc(q.expected)+'</div>'
+    +'</div>'
+    +'</div>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">'+conceptPills+'</div>'
+    +'<button id="n-hint-btn" style="font-size:13px;color:#185FA5;background:none;border:none;cursor:pointer;padding:0;margin-bottom:'+(nHint[nCur]?'8':'14')+'px">&#128161; '+(nHint[nCur]?'Hide hint':'Show hint')+'</button>'
+    +hintBox
+    +'<div style="font-size:12px;color:#9b9b97;margin-bottom:5px;font-weight:500">STEP 1 &#8212; Write and run this in PyCharm, then paste your code here:</div>'
+    +'<textarea id="n-code" style="width:100%;font-family:\'Courier New\',monospace;font-size:13px;padding:12px;border:0.5px solid #ccc;border-radius:8px;background:#f5f5f3;color:#1a1a1a;resize:vertical;min-height:180px;line-height:1.65" placeholder="# Write your Python solution here...">'+nEsc(nCode[nCur]||'')+'</textarea>'
+    +'<div style="font-size:12px;color:#9b9b97;margin:12px 0 5px;font-weight:500">STEP 2 &#8212; Paste your program&#39;s actual output here:</div>'
+    +'<textarea id="n-out" style="width:100%;font-family:\'Courier New\',monospace;font-size:13px;padding:12px;border:0.5px solid #ccc;border-radius:8px;background:#f5f5f3;color:#1a1a1a;resize:vertical;min-height:90px;line-height:1.65" placeholder="Paste what your program actually printed...">'+nEsc(nOutput[nCur]||'')+'</textarea>'
+    +'<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">'
+    +'<button id="n-check" style="padding:9px 20px;background:#1a1a1a;color:#fff;border:none;border-radius:8px;font-size:13px;cursor:pointer">&#10003; Check my output</button>'
+    +'<button id="n-pass" style="padding:9px 16px;background:#fff;border:0.5px solid #1D9E75;color:#0F6E56;border-radius:8px;font-size:13px;cursor:pointer">Mark correct</button>'
+    +'<button id="n-fail" style="padding:9px 16px;background:#fff;border:0.5px solid #A32D2D;color:#A32D2D;border-radius:8px;font-size:13px;cursor:pointer">Mark incorrect</button>'
+    +'<button id="n-sol-btn" style="padding:9px 16px;background:#fff;border:0.5px solid #ccc;color:#555;border-radius:8px;font-size:13px;cursor:pointer">'+(nSol[nCur]?'Hide solution':'Show solution')+'</button>'
+    +'</div>'
+    +'<div id="n-grade-result" style="margin-top:10px"></div>'
+    +statusBox
+    +solBox
+    +'</div>';
+
+  document.getElementById('qview').innerHTML=html;
+
+  // Wire events after DOM is set
+  var hintB  = document.getElementById('n-hint-btn');
+  var solB   = document.getElementById('n-sol-btn');
+  var checkB = document.getElementById('n-check');
+  var passB  = document.getElementById('n-pass');
+  var failB  = document.getElementById('n-fail');
+  var codeTA = document.getElementById('n-code');
+  var outTA  = document.getElementById('n-out');
+
+  if(hintB)  hintB.onclick  = function(){ nSave(); nHint[nCur]=!nHint[nCur]; nRender(); };
+  if(solB)   solB.onclick   = function(){ nSave(); nSol[nCur]=!nSol[nCur];   nRender(); };
+  if(checkB) checkB.onclick = nGrade;
+  if(passB)  passB.onclick  = function(){ nMark(true);  };
+  if(failB)  failB.onclick  = function(){ nMark(false); };
+  if(codeTA) codeTA.oninput = function(){ nCode[nCur]   = codeTA.value; };
+  if(outTA)  outTA.oninput  = function(){ nOutput[nCur] = outTA.value;  };
+
+  updateScore();
+}
+
+// ── Patch switchSection to handle nydi ────────────────────
+// IMPORTANT: uses switchSection (not setSection) to match the main script
+var _origSwitchSection = switchSection;
+switchSection = function(key){
+  if(curSec === 'nydi') nSave();
+  if(key === 'nydi'){
+    curSec = 'nydi';
+    curQ   = 0;
+    nCur   = 0;
+    buildSectionNav();
+    nRender();
+    return;
+  }
+  _origSwitchSection(key);
+};
+
+// Patch go() to handle nydi navigation
+var _origGo = go;
+go = function(d){
+  if(curSec === 'nydi'){
+    nSave();
+    nCur = Math.max(0, Math.min(NYDI_Q.length - 1, nCur + d));
+    nRender();
+    return;
+  }
+  _origGo(d);
+};
+
+// Rebuild nav to show the new section button, then render initial state
+buildSectionNav();
+updateScore();
+</script>
+
+</body></html>
