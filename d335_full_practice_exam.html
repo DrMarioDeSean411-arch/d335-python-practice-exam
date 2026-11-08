@@ -109,7 +109,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <div class="top-bar">
   <div class="top-title">D335 — Introduction to Python Programming</div>
-  <div class="top-sub">Full practice exam · 75 questions · 6 sections · rebuilt from official course practice test</div>
+  <div class="top-sub">Full practice exam · 105 questions · 7 sections · rebuilt from official course practice test</div>
   <div class="top-pills">
     <span class="pill p-c1">C1 Basic Scripts</span>
     <span class="pill p-c2">C2 Control Flow</span>
@@ -121,14 +121,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 
 <div class="scr-grid">
-  <div class="scr-card"><div class="scr-num" id="sc-tot">0<span style="font-size:13px;color:#9b9b97">/63</span></div><div class="scr-lbl">Answered</div></div>
+  <div class="scr-card"><div class="scr-num" id="sc-tot">0<span style="font-size:13px;color:#9b9b97">/75</span></div><div class="scr-lbl">Answered</div></div>
   <div class="scr-card"><div class="scr-num" id="sc-right" style="color:#1D9E75">0</div><div class="scr-lbl">Correct</div></div>
   <div class="scr-card"><div class="scr-num" id="sc-wrong" style="color:#A32D2D">0</div><div class="scr-lbl">Incorrect</div></div>
   <div class="scr-card"><div class="scr-num" id="sc-pct">&#8212;</div><div class="scr-lbl">Score</div></div>
   <div class="scr-card"><div class="scr-num" id="sc-pass" style="color:#9b9b97">&#8212;</div><div class="scr-lbl">Exam ready?</div></div>
 </div>
 <div class="prog-wrap"><div class="prog-bar" id="prog" style="width:0%"></div></div>
-<div class="prog-lbl"><span id="prog-txt">0 of 63 answered</span><span id="pass-note" style="color:#1D9E75;font-weight:500"></span></div>
+<div class="prog-lbl"><span id="prog-txt">0 of 75 answered</span><span id="pass-note" style="color:#1D9E75;font-weight:500"></span></div>
 
 <div class="sec-label">Section</div>
 <div class="sec-row" id="sec-row"></div>
@@ -784,20 +784,310 @@ ans:2,
 rationale:'<strong>C is correct.</strong> <code>from converter import convert</code> imports the function but NOT the module name "converter". Calling converter.convert(5) raises NameError because "converter" was never bound in the namespace.',
 misconception:'Students pick B — that code is correct. The bug in C is using the module name after a from-import that only imported the function.'}
 ];
-var NYDI_Q = [
-{comp:'C1',topic:'Float Arithmetic',diff:'found',
-title:'Laundry water use calculator',
-prompt:'Write a program that:\n• Takes 3 integer inputs (loads per resident: A, B, C)\n• Resident A = 12.40 gal/load, B = 9.75 gal/load, C = 14.18 gal/load\n• Calculates total water used\n• Prints result to exactly 2 decimal places\n\nFormat: Water used: [total] gallons',
-example:'4  2  6',
-expected:'Water used: 154.18 gallons',
-hint:'Multiply each load count by its rate. Add all three. Use f"...{total:.2f}..." for 2 decimal places.',
-concepts:['float multiplication',':.2f formatting','multiple inputs'],
-solution:"a=int(input())\nb=int(input())\nc=int(input())\ntotal=(a*12.40)+(b*9.75)+(c*14.18)\nprint(f'Water used: {total:.2f} gallons')",
+// zyBook Sim Practice Exam — 30 open-coding challenges (NYDI schema)
+var ZYBQ = [
+
+// ── C1: Basic Scripts ─────────────────────────────────────────────────────
+{comp:'C1',topic:'Input & Variables',diff:'found',
+title:'Greet the user by name',
+prompt:'Write a program that:\n\u2022 Asks the user for their first name\n\u2022 Asks for their age\n\u2022 Prints a greeting on one line\n\nFormat: Hello, [name]! You are [age] years old.',
+example:'Maria\n22',
+expected:'Hello, Maria! You are 22 years old.',
+hint:'Use two input() calls. Store the results in variables. Build the output with an f-string.',
+concepts:['input()','f-string','variables'],
+solution:"name=input('Enter your first name: ')\nage=input('Enter your age: ')\nprint(f'Hello, {name}! You are {age} years old.')",
 random:false},
 
-{comp:'C1',topic:'Floor Division / Modulo',diff:'found',
+{comp:'C1',topic:'Arithmetic & Formatting',diff:'found',
+title:'Rectangle area and perimeter',
+prompt:'Write a program that:\n\u2022 Takes two integer inputs: length and width\n\u2022 Computes area (length \u00d7 width) and perimeter (2 \u00d7 (length + width))\n\u2022 Prints both results\n\nFormat:\nArea: [area]\nPerimeter: [perimeter]',
+example:'8\n5',
+expected:'Area: 40\nPerimeter: 26',
+hint:'Cast inputs with int(). Area = l * w. Perimeter = 2 * (l + w).',
+concepts:['int() cast','arithmetic operators','print()'],
+solution:"l=int(input('Length: '))\nw=int(input('Width: '))\nprint('Area:',l*w)\nprint('Perimeter:',2*(l+w))",
+random:false},
+
+{comp:'C1',topic:'Float Formatting',diff:'found',
+title:'Product discount calculator',
+prompt:'Write a program that:\n\u2022 Takes three inputs: product name (str), original price (float), discount % (float)\n\u2022 Calculates amount off and final price\n\u2022 Prints all five lines\n\nFormat:\nProduct: [name]\nOriginal: $[price]\nDiscount: [pct]%\nAmount Off: $[amt]\nFinal Price: $[final]',
+example:'Laptop\n1000\n15',
+expected:'Product: Laptop\nOriginal: $1000.00\nDiscount: 15.0%\nAmount Off: $150.00\nFinal Price: $850.00',
+hint:'Use float() for price and pct. amt = price * pct / 100. final = price - amt. Use :.2f for dollar values.',
+concepts:['float()','f-string :.2f','arithmetic'],
+solution:"name=input('Product: ')\nprice=float(input('Price: '))\npct=float(input('Discount %: '))\namt=price*pct/100\nfinal=price-amt\nprint(f'Product: {name}')\nprint(f'Original: ${price:.2f}')\nprint(f'Discount: {pct}%')\nprint(f'Amount Off: ${amt:.2f}')\nprint(f'Final Price: ${final:.2f}')",
+random:false},
+
+{comp:'C1',topic:'List Operations',diff:'found',
+title:'Five-number list statistics',
+prompt:'Write a program that:\n\u2022 Takes 5 float inputs (one per line)\n\u2022 Stores them in a list\n\u2022 Prints minimum, maximum, sum, and average (rounded to 1 decimal place)\n\nFormat:\nMin: [min]\nMax: [max]\nSum: [sum]\nAverage: [avg]',
+example:'4.5\n7.0\n2.1\n9.3\n6.6',
+expected:'Min: 2.1\nMax: 9.3\nSum: 29.5\nAverage: 5.9',
+hint:'Use a list and append() inside a for loop, or a list comprehension. Use min(), max(), sum(), round().',
+concepts:['list','append()','min() max() sum()','round()'],
+solution:"nums=[float(input()) for _ in range(5)]\nprint('Min:',min(nums))\nprint('Max:',max(nums))\nprint('Sum:',round(sum(nums),1))\nprint('Average:',round(sum(nums)/len(nums),1))",
+random:false},
+
+{comp:'C1',topic:'String Methods',diff:'inter',
+title:'Word analysis — split, max, min, reversed',
+prompt:'Write a program that:\n\u2022 Takes a sentence as input\n\u2022 Splits it into words\n\u2022 Prints total word count, longest word, shortest word, and the sentence reversed (words reversed, not letters)\n\nFormat:\nTotal words: [n]\nLongest word: [word]\nShortest word: [word]\nReversed: [rev sentence]',
+example:'The quick brown fox jumps',
+expected:'Total words: 5\nLongest word: quick\nShortest word: The\nReversed: jumps fox brown quick The',
+hint:'Use split(). max(words, key=len) and min(words, key=len). " ".join(reversed(words)) for the reversed sentence.',
+concepts:['split()','max/min key=len','reversed()','join()'],
+solution:"s=input('Enter a sentence: ')\nw=s.split()\nprint('Total words:',len(w))\nprint('Longest word:',max(w,key=len))\nprint('Shortest word:',min(w,key=len))\nprint('Reversed:',' '.join(reversed(w)))",
+random:false},
+
+{comp:'C1',topic:'Type Conversion',diff:'inter',
+title:'Step count — integer, float, and string sums',
+prompt:'Write a program that:\n\u2022 Takes 5 integer inputs (daily step counts, one per line)\n\u2022 Prints three different representations of their total\n\nFormat:\nInteger: [int sum]\nFloat: [float sum]\nString: [string concatenation]',
+example:'2\n5\n8\n1\n9',
+expected:'Integer: 25\nFloat: 25.0\nString: 25819',
+hint:'Read each value as a string first (plain input()). Convert and process three ways: int sum, float sum, and string join.',
+concepts:['int() float() str()','sum()','join()','type conversion'],
+solution:"vals=[input() for _ in range(5)]\nprint('Integer:',sum(int(x) for x in vals))\nprint('Float:',sum(float(x) for x in vals))\nprint('String:',''.join(vals))",
+random:false},
+
+{comp:'C1',topic:'String Slicing',diff:'inter',
+title:'Batch code formatter — 9-digit to xx-xxx-xxxx',
+prompt:'Write a program that:\n\u2022 Takes a 9-digit string (batch code)\n\u2022 Formats it as xx-xxx-xxxx\n\u2022 Prints the formatted code',
+example:'481029573',
+expected:'48-102-9573',
+hint:'Slice: code[0:2], code[2:5], code[5:]. Join with "-". No int conversion needed if you read as a string.',
+concepts:['string slicing','string concatenation','" ".join()'],
+solution:"code=input('Enter batch code: ')\nprint(code[0:2]+'-'+code[2:5]+'-'+code[5:])",
+random:false},
+
+{comp:'C1',topic:'Functions / Boolean',diff:'inter',
+title:'Approved-code checker',
+prompt:'Write a program that:\n\u2022 Uses approved_codes = [12, -8, 47, 63, -21]\n\u2022 Defines a function is_approved(n) that returns True or False\n\u2022 Takes one integer input\n\u2022 Calls the function and prints the result\n\nFormat: Is the input an approved code? [True/False]',
+example:'63',
+expected:'Is the input an approved code? True',
+hint:'Return n in approved_codes inside the function. The "in" operator returns a Boolean directly.',
+concepts:['def / return','list membership in','Boolean return'],
+solution:"approved_codes=[12,-8,47,63,-21]\ndef is_approved(n):\n    return n in approved_codes\nn=int(input())\nprint(f'Is the input an approved code? {is_approved(n)}')",
+random:false},
+
+{comp:'C1',topic:'type() / isinstance()',diff:'inter',
+title:'Mixed-type inventory classifier',
+prompt:'Write a program that:\n\u2022 Uses: inventory = ["Warehouse Report", 2026, 18.5, ["hammer","wrench","drill"], None, {"manager":"Dana","shift":"night"}]\n\u2022 Takes one integer input (index 0\u20135)\n\u2022 Retrieves the element and its type name\n\u2022 Prints element, type, and category (iterable / numeric / other)\n\nFormat: Element: [val], Type: [name], Message: This element is [category].',
+example:'3',
+expected:"Element: ['hammer', 'wrench', 'drill'], Type: list, Message: This element is iterable.",
+hint:'type(elem).__name__ gives the type as a string. isinstance(elem,(str,list,dict)) tests iterables.',
+concepts:['type().__name__','isinstance()','list indexing'],
+solution:"inventory=['Warehouse Report',2026,18.5,['hammer','wrench','drill'],None,{'manager':'Dana','shift':'night'}]\nidx=int(input())\nelem=inventory[idx]\nname=type(elem).__name__\nif isinstance(elem,(str,list,dict)):\n    msg='iterable.'\nelif isinstance(elem,(int,float)):\n    msg='numeric.'\nelse:\n    msg='a different data type.'\nprint(f'Element: {elem}, Type: {name}, Message: This element is {msg}')",
+random:false},
+
+{comp:'C1',topic:'String Formatting',diff:'inter',
+title:'Temperature conversion table',
+prompt:'Write a program that:\n\u2022 Takes a starting Celsius temperature (int) and a step size (int)\n\u2022 Generates 5 rows of Celsius and Fahrenheit values\n\u2022 Prints a formatted two-column table\n\nFormat (each row):\n[C]\u00b0C = [F:.1f]\u00b0F',
+example:'0\n10',
+expected:'0\u00b0C = 32.0\u00b0F\n10\u00b0C = 50.0\u00b0F\n20\u00b0C = 68.0\u00b0F\n30\u00b0C = 86.0\u00b0F\n40\u00b0C = 104.0\u00b0F',
+hint:'F = C * 9/5 + 32. Use a for loop with range(5) and increment by step each iteration.',
+concepts:['for loop','f-string :.1f','temperature formula'],
+solution:"c=int(input('Start: '))\nstep=int(input('Step: '))\nfor i in range(5):\n    temp=c+i*step\n    f=temp*9/5+32\n    print(f'{temp}\u00b0C = {f:.1f}\u00b0F')",
+random:false},
+
+// ── C2: Control Flow ──────────────────────────────────────────────────────
+{comp:'C2',topic:'Conditional Logic',diff:'found',
+title:'Grade assignment with letter and message',
+prompt:'Write a program that:\n\u2022 Takes three integer inputs (quiz scores)\n\u2022 Computes the average\n\u2022 Assigns a letter grade (A\u226590, B\u226580, C\u226570, D\u226560, F otherwise)\n\u2022 Prints the average (2 decimal places), grade, and a message\n\nMessages: A=Excellent!, B=Good work, C=Satisfactory, D=Needs improvement, F=See me after class',
+example:'85\n90\n88',
+expected:'Average: 87.67\nGrade: B\nMessage: Good work',
+hint:'Compute avg = (s1+s2+s3)/3. Use if/elif/else for grade boundaries. The :.2f format spec rounds the display.',
+concepts:['if/elif/else',':.2f','arithmetic average'],
+solution:"s1,s2,s3=int(input()),int(input()),int(input())\navg=(s1+s2+s3)/3\nif avg>=90: grade,msg='A','Excellent!'\nelif avg>=80: grade,msg='B','Good work'\nelif avg>=70: grade,msg='C','Satisfactory'\nelif avg>=60: grade,msg='D','Needs improvement'\nelse: grade,msg='F','See me after class'\nprint(f'Average: {avg:.2f}')\nprint(f'Grade: {grade}')\nprint(f'Message: {msg}')",
+random:false},
+
+{comp:'C2',topic:'While Loops',diff:'inter',
+title:'Menu-driven calculator',
+prompt:'Write a program with a menu loop that:\n\u2022 Displays a menu: 1. Add  2. Subtract  3. Exit\n\u2022 Asks the user to choose (1\u20133)\n\u2022 For Add/Subtract: asks for two floats and prints the result\n\u2022 For Exit: prints "Goodbye!" and breaks\n\u2022 For invalid input: prints "Invalid choice, try again"\n\nRepeat until the user chooses 3.',
+example:'1\n10\n5\n3',
+expected:'10.0 + 5.0 = 15.0\nGoodbye!',
+hint:'Use while True: with a break on choice==3. float(input()) for the operands. The f-string prints the floats as 10.0, 5.0 automatically.',
+concepts:['while True','break','float input','menu pattern'],
+solution:"while True:\n    print('Menu:')\n    print('1. Add')\n    print('2. Subtract')\n    print('3. Exit')\n    choice=int(input('Choose (1-3): '))\n    if choice==1:\n        a=float(input())\n        b=float(input())\n        print(f'{a} + {b} = {a+b}')\n    elif choice==2:\n        a=float(input())\n        b=float(input())\n        print(f'{a} - {b} = {a-b}')\n    elif choice==3:\n        print('Goodbye!')\n        break\n    else:\n        print('Invalid choice, try again')",
+random:false},
+
+{comp:'C2',topic:'Nested Loops',diff:'inter',
+title:'Multiplication table',
+prompt:'Write a program that:\n\u2022 Takes one integer input n (1\u201312)\n\u2022 Prints an n\u00d7n multiplication table\n\u2022 Each product is right-aligned in a 3-character field\n\u2022 No space between cells; newline after each row',
+example:'3',
+expected:'  1  2  3\n  2  4  6\n  3  6  9',
+hint:'Use nested for loops: outer i in range(1,n+1), inner j in range(1,n+1). f"{i*j:3d}" gives 3-char right-alignment. Use end="" inside the row and print() at the end of each row.',
+concepts:['nested for loops','f-string :3d','end="" vs print()'],
+solution:"n=int(input())\nfor i in range(1,n+1):\n    for j in range(1,n+1):\n        print(f'{i*j:3d}',end='')\n    print()",
+random:false},
+
+{comp:'C2',topic:'Loop Accumulators',diff:'found',
+title:'Positive / negative / zero sorter',
+prompt:'Write a program that:\n\u2022 Uses: nums = [5, -3, 0, 8, -1, 0, 12, -4, 3, 0]\n\u2022 Loops through the list and builds three separate lists\n\u2022 Prints each list and its length\n\nFormat:\nPositives: [list]\nNegatives: [list]\nZeros: [list]\nCounts: [p] positive, [n] negative, [z] zero',
+example:'(uses hardcoded list)',
+expected:'Positives: [5, 8, 12, 3]\nNegatives: [-3, -1, -4]\nZeros: [0, 0, 0]\nCounts: 4 positive, 3 negative, 3 zero',
+hint:'Use if/elif/else inside the for loop, not three separate if statements. That way each number goes to exactly one list.',
+concepts:['for loop','if/elif/else','list append','multiple accumulators'],
+solution:"nums=[5,-3,0,8,-1,0,12,-4,3,0]\npos,neg,zer=[],[],[]\nfor n in nums:\n    if n>0: pos.append(n)\n    elif n<0: neg.append(n)\n    else: zer.append(n)\nprint('Positives:',pos)\nprint('Negatives:',neg)\nprint('Zeros:',zer)\nprint(f'Counts: {len(pos)} positive, {len(neg)} negative, {len(zer)} zero')",
+random:false},
+
+{comp:'C2',topic:'String Loop / Counting',diff:'inter',
+title:'Vowel and consonant counter',
+prompt:'Write a program that:\n\u2022 Takes a string input (a word or sentence)\n\u2022 Counts vowels (a e i o u, case-insensitive) and consonants (letters that are not vowels)\n\u2022 Ignores non-letter characters\n\nFormat:\nVowels: [v]\nConsonants: [c]',
+example:'Hello World',
+expected:'Vowels: 3\nConsonants: 7',
+hint:'Loop over each character. Use ch.isalpha() to skip spaces/punctuation. Use ch.lower() in "aeiou" to test for vowels.',
+concepts:['for ch in string','isalpha()','lower()','counter variables'],
+solution:"s=input()\nvow=con=0\nfor ch in s:\n    if ch.isalpha():\n        if ch.lower() in 'aeiou': vow+=1\n        else: con+=1\nprint('Vowels:',vow)\nprint('Consonants:',con)",
+random:false},
+
+{comp:'C2',topic:'try/except',diff:'inter',
+title:'Safe list index lookup',
+prompt:'Write a program that:\n\u2022 Uses: languages = ["Python","Rust","Go","Swift","Kotlin","Ruby"]\n\u2022 Takes one integer input (index)\n\u2022 Wraps the list access in try/except\n\u2022 Prints the language at that index, or "Invalid index" if out of range',
+example:'2',
+expected:'Go',
+hint:'Wrap languages[idx] in a try block. Catch IndexError and print "Invalid index".',
+concepts:['try/except','IndexError','list indexing'],
+solution:"languages=['Python','Rust','Go','Swift','Kotlin','Ruby']\ntry:\n    idx=int(input())\n    print(languages[idx])\nexcept IndexError:\n    print('Invalid index')",
+random:false},
+
+{comp:'C2',topic:'Multi-tier Conditionals',diff:'inter',
+title:'Server CPU load classifier',
+prompt:'Write a program that:\n\u2022 Takes one integer (CPU load %)\n\u2022 Prints load state: Idle(<20), Normal(20-59), Busy(60-84), Critical(85-96), Overloaded(97+)\n\u2022 Also prints "Alert: Maximum load!" if load==100 (separate if)\n\u2022 Also prints "Consider scaling down." if load<20 (separate if)',
+example:'15',
+expected:'Idle\nConsider scaling down.',
+hint:'Use if/elif/else for the five states. Then TWO separate standalone if statements for the extra messages \u2014 not elif, so both can fire independently.',
+concepts:['multi-tier if/elif/else','independent if blocks','optional output'],
+solution:"load=int(input())\nif load>=97: state='Overloaded'\nelif load>=85: state='Critical'\nelif load>=60: state='Busy'\nelif load>=20: state='Normal'\nelse: state='Idle'\nprint(state)\nif load==100: print('Alert: Maximum load!')\nif load<20: print('Consider scaling down.')",
+random:false},
+
+{comp:'C2',topic:'Dict Loop / Accumulator',diff:'inter',
+title:'Farm crate total price',
+prompt:'Write a program that:\n\u2022 Uses: crates = {"APPL":24.50,"PEAR":19.75,"PLUM":31.20,"CHER":42.10,"PEAC":27.65,"FIGS":55.30,"KIWI":18.90,"MANG":33.40,"GRAP":21.15}\n\u2022 Takes an integer input (quantity), then that many crate code strings\n\u2022 Looks up each price and accumulates total\n\nFormat: Total price: $[total]',
+example:'3\nPEAR\nMANG\nFIGS',
+expected:'Total price: $108.45',
+hint:'Loop range(n), read a code each iteration, add crates[code] to total. :.2f formats the final total.',
+concepts:['dict key lookup','for loop accumulator',':.2f'],
+solution:"crates={'APPL':24.50,'PEAR':19.75,'PLUM':31.20,'CHER':42.10,'PEAC':27.65,'FIGS':55.30,'KIWI':18.90,'MANG':33.40,'GRAP':21.15}\nn=int(input())\ntotal=0.0\nfor _ in range(n):\n    code=input()\n    total+=crates[code]\nprint(f'Total price: ${total:.2f}')",
+random:false},
+
+{comp:'C2',topic:'Dict + Discount Tiers',diff:'adv',
+title:'Hardware store discount engine',
+prompt:'Write a program that:\n\u2022 Uses: supplies = {"nails":0.12,"hinges":2.35,"brackets":1.48,"screws":0.09,"bolts":0.65}\n\u2022 Takes a string (item) and integer (quantity)\n\u2022 Applies discount: <15 = full price, 15-30 = 8% off, 31+ = 15% off\n\nFormat: [qty] [item] total cost: $[total]',
+example:'nails\n20',
+expected:'20 nails total cost: $2.21',
+hint:'Look up price in dict. if qty>=31 → multiply by 0.85; elif qty>=15 → multiply by 0.92; else full price.',
+concepts:['dict lookup','if/elif/else discount',':.2f'],
+solution:"supplies={'nails':0.12,'hinges':2.35,'brackets':1.48,'screws':0.09,'bolts':0.65}\nitem=input()\nqty=int(input())\nprice=supplies[item]\nif qty>=31: total=qty*price*0.85\nelif qty>=15: total=qty*price*0.92\nelse: total=qty*price\nprint(f'{qty} {item} total cost: ${total:.2f}')",
+random:false},
+
+// ── C3: Packages & Modules ────────────────────────────────────────────────
+{comp:'C3',topic:'Functions — def/return',diff:'found',
+title:'Celsius to Fahrenheit function',
+prompt:'Write a program that:\n\u2022 Defines a function celsius_to_fahrenheit(c) that returns the Fahrenheit value\n\u2022 Takes one float input (Celsius)\n\u2022 Calls the function and prints the result to 1 decimal place\n\nFormat: [C]\u00b0C = [F]\u00b0F\n\nFormula: F = C \u00d7 9/5 + 32',
+example:'100',
+expected:'100.0\u00b0C = 212.0\u00b0F',
+hint:'Use float division: c * 9 / 5 + 32, NOT c * 9 // 5 + 32. Floor division breaks the formula for most values.',
+concepts:['def / return','float division vs floor division','f-string :.1f'],
+solution:"def celsius_to_fahrenheit(c):\n    return c*9/5+32\nc=float(input())\nf=celsius_to_fahrenheit(c)\nprint(f'{c}\u00b0C = {f:.1f}\u00b0F')",
+random:false},
+
+{comp:'C3',topic:'math module',diff:'inter',
+title:'Circle geometry with math.pi',
+prompt:'Write a program that:\n\u2022 Imports the math module\n\u2022 Takes one float input (radius)\n\u2022 Uses math.pi to compute area and circumference\n\u2022 Prints both rounded to 2 decimal places\n\nFormat:\nArea: [area]\nCircumference: [circ]',
+example:'5',
+expected:'Area: 78.54\nCircumference: 31.42',
+hint:'Area = math.pi * r ** 2. Circumference = 2 * math.pi * r. Use round(..., 2) or :.2f.',
+concepts:['import math','math.pi','exponentiation **',':.2f'],
+solution:"import math\nr=float(input())\nprint(f'Area: {math.pi*r**2:.2f}')\nprint(f'Circumference: {2*math.pi*r:.2f}')",
+random:false},
+
+{comp:'C3',topic:'math module',diff:'inter',
+title:'Power and square root',
+prompt:'Write a program that:\n\u2022 Imports the math module\n\u2022 Takes two integer inputs: base and exponent\n\u2022 Computes: power (base**exp) and square root of the power\n\u2022 Prints both\n\nFormat:\nPower: [power]\nSquare Root: [sqrt:.2f]',
+example:'4\n3',
+expected:'Power: 64\nSquare Root: 8.00',
+hint:'math.sqrt() takes a float. ** is the exponentiation operator. int ** int gives an int result.',
+concepts:['math.sqrt()','** operator','int result'],
+solution:"import math\nb=int(input())\ne=int(input())\npow_val=b**e\nprint('Power:',pow_val)\nprint(f'Square Root: {math.sqrt(pow_val):.2f}')",
+random:false},
+
+{comp:'C3',topic:'random module',diff:'inter',
+title:'Number guessing game',
+prompt:'Write a program that:\n\u2022 Imports random\n\u2022 Picks a secret number between 1 and 10 (inclusive)\n\u2022 Gives the user 3 attempts\n\u2022 Prints "Too low!", "Too high!", or "Correct! You got it in [n] tries."\n\u2022 If all 3 attempts fail, prints "Out of guesses! The number was [n]."\n\nUse random.randint(1, 10).',
+example:'(random — output varies)',
+expected:'Too low!\nToo high!\nCorrect! You got it in 3 tries.',
+hint:'Use a for loop with range(3). Track attempt count. Break on a correct guess. The random number stays fixed for the whole game.',
+concepts:['import random','random.randint()','for loop with break','attempt counter'],
+solution:"import random\nsecret=random.randint(1,10)\nfor attempt in range(1,4):\n    guess=int(input('Guess: '))\n    if guess<secret: print('Too low!')\n    elif guess>secret: print('Too high!')\n    else:\n        print(f'Correct! You got it in {attempt} tries.')\n        break\nelse:\n    print(f'Out of guesses! The number was {secret}.')",
+random:true},
+
+{comp:'C3',topic:'Functions — multiple return values',diff:'inter',
+title:'Grade letter and GPA point',
+prompt:'Write a program that:\n\u2022 Defines a function grade_letter(avg) that returns a letter grade (A\u226590, B\u226580, C\u226570, D\u226560, F otherwise)\n\u2022 Defines a function gpa_point(letter) that returns GPA points (A=4.0, B=3.0, C=2.0, D=1.0, F=0.0)\n\u2022 Takes one float input (average score)\n\u2022 Prints the grade and GPA point\n\nFormat:\nGrade: [letter]\nGPA: [points]',
+example:'85.5',
+expected:'Grade: B\nGPA: 3.0',
+hint:'grade_letter must check highest threshold first (>=90 for A). gpa_point uses a dict or if/elif chain.',
+concepts:['def / return','conditional ordering','chained function calls'],
+solution:"def grade_letter(avg):\n    if avg>=90: return 'A'\n    elif avg>=80: return 'B'\n    elif avg>=70: return 'C'\n    elif avg>=60: return 'D'\n    else: return 'F'\ndef gpa_point(letter):\n    pts={'A':4.0,'B':3.0,'C':2.0,'D':1.0,'F':0.0}\n    return pts[letter]\navg=float(input())\nletter=grade_letter(avg)\nprint('Grade:',letter)\nprint('GPA:',gpa_point(letter))",
+random:false},
+
+{comp:'C3',topic:'File I/O',diff:'inter',
+title:'Append sentence to a text file',
+prompt:'Write a program that:\n\u2022 Takes a filename as input\n\u2022 Reads the file (which has 3 words, one per line)\n\u2022 Joins them into a sentence with spaces\n\u2022 Appends the sentence to the file on a new line\n\u2022 Reads and prints the updated file contents',
+example:'words.txt (contains river / valley / bridge)',
+expected:'river\nvalley\nbridge\nriver valley bridge',
+hint:'Open "r" to read, split() to get words, " ".join() for sentence. Open "a" to append (include \\n before the sentence). Re-open "r" to print.',
+concepts:['open() r/a modes','read().split()',' ".join()','write() \\n'],
+solution:"fname=input()\nwith open(fname,'r') as f:\n    words=f.read().split()\nsentence=' '.join(words)\nwith open(fname,'a') as f:\n    f.write('\\n'+sentence)\nwith open(fname,'r') as f:\n    print(f.read().strip())",
+random:false},
+
+{comp:'C3',topic:'csv module',diff:'inter',
+title:'Reverse CSV rows',
+prompt:'Write a program that:\n\u2022 Takes a filename as input\n\u2022 Uses the csv module to read each row\n\u2022 Prints each row reversed as a list\n\nExample: row ["red","blue","green"] prints as [\'green\', \'blue\', \'red\']',
+example:'roster.csv',
+expected:"['green', 'blue', 'red']\n['tuesday', 'monday']\n['chess', 'golf', 'tennis', 'soccer']",
+hint:'import csv. Use csv.reader(f) in a with block. Reverse each row with [::-1].',
+concepts:['import csv','csv.reader()','list [::-1]'],
+solution:"import csv\nfname=input()\nwith open(fname,'r') as f:\n    for row in csv.reader(f):\n        print(row[::-1])",
+random:false},
+
+{comp:'C3',topic:'Modules — import patterns',diff:'inter',
+title:'Custom converter module usage',
+prompt:'A file converter.py exists with a function convert(val). Write a program that:\n\u2022 Imports ONLY the convert function (not the whole module)\n\u2022 Takes one integer input\n\u2022 Calls convert(val) and prints the result\n\nDo NOT use the syntax: import converter',
+example:'5',
+expected:'Converted: 5',
+hint:'from converter import convert — this imports the function directly. Call convert(val), not converter.convert(val).',
+concepts:['from module import name','function call','import styles'],
+solution:"from converter import convert\nval=int(input())\nprint('Converted:',convert(val))",
+random:false},
+
+{comp:'C3',topic:'statistics module',diff:'inter',
+title:'Statistics module — mean, median, mode',
+prompt:'Write a program that:\n\u2022 Imports the statistics module\n\u2022 Uses: scores = [82, 90, 78, 90, 85, 92, 78, 88, 90, 76]\n\u2022 Prints mean (2 decimal places), median, and mode\n\nFormat:\nMean: [mean]\nMedian: [median]\nMode: [mode]',
+example:'(uses hardcoded list)',
+expected:'Mean: 84.90\nMedian: 87.0\nMode: 90',
+hint:'import statistics. statistics.mean(), statistics.median(), statistics.mode(). Use :.2f for mean only.',
+concepts:['import statistics','mean() median() mode()',':.2f'],
+solution:"import statistics\nscores=[82,90,78,90,85,92,78,88,90,76]\nprint(f'Mean: {statistics.mean(scores):.2f}')\nprint(f'Median: {statistics.median(scores)}')\nprint(f'Mode: {statistics.mode(scores)}')",
+random:false},
+
+{comp:'C3',topic:'random + functions',diff:'adv',
+title:'Student grade data analysis',
+prompt:'Write a program that:\n\u2022 Imports random\n\u2022 Generates 10 random integer scores between 50 and 100\n\u2022 Computes average (:.1f), median (sorted middle), and counts how many scores are >= 70 (passing)\n\u2022 Prints: Scores, Average, Median, Passing\n\nFormat:\nScores: [list]\nAverage: [avg]\nMedian: [med]\nPassing: [count] out of 10',
+example:'(random — output varies)',
+expected:'Scores: [75, 88, 62, ...]\nAverage: 78.3\nMedian: 79\nPassing: 8 out of 10',
+hint:'sorted_scores = sorted(scores). Median of 10 items = average of index 4 and 5. Use a list comprehension for passing count.',
+concepts:['random.randint()','sorted()','median of even list','list comprehension count'],
+solution:"import random\nscores=[random.randint(50,100) for _ in range(10)]\nprint('Scores:',scores)\nprint(f'Average: {sum(scores)/len(scores):.1f}')\ns=sorted(scores)\nmed=(s[4]+s[5])//2\nprint('Median:',med)\npassing=len([x for x in scores if x>=70])\nprint(f'Passing: {passing} out of 10')",
+random:true}
+
+];
+
+// ── Now You Do It (12 open-coding challenges) ─────────────────────────────
+var NYDI_Q = [
+
+{comp:'C1',topic:'Arithmetic',diff:'found',
 title:'Seconds converter',
-prompt:'Write a program that:\n• Takes one integer input (total seconds)\n• Converts to hours, minutes, and remaining seconds\n• Prints each on the same line\n\nFormat: Hours: [h]  Minutes: [m]  Seconds: [s]',
+prompt:'Write a program that:\n\u2022 Takes one integer input (total seconds)\n\u2022 Converts to hours, minutes, and remaining seconds\n\u2022 Prints each on the same line\n\nFormat: Hours: [h]  Minutes: [m]  Seconds: [s]',
 example:'9125',
 expected:'Hours: 2  Minutes: 32  Seconds: 5',
 hint:'Hours = total // 3600. Remaining = total % 3600. Minutes = remaining // 60. Seconds = remaining % 60.',
@@ -807,9 +1097,9 @@ random:false},
 
 {comp:'C1',topic:'type() / Classification',diff:'inter',
 title:'Mixed-type inventory classifier',
-prompt:'Write a program that:\n• Uses this list: inventory = ["Warehouse Report", 2026, 18.5, ["hammer","wrench","drill"], None, {"manager":"Dana","shift":"night"}]\n• Takes one integer input (index 0-5)\n• Retrieves the element, gets its type name\n• Prints: iterable (str/list/dict), numeric (int/float), or other\n\nFormat: Element: [val], Type: [name], Message: [category message]',
+prompt:'Write a program that:\n\u2022 Uses this list: inventory = ["Warehouse Report", 2026, 18.5, ["hammer","wrench","drill"], None, {"manager":"Dana","shift":"night"}]\n\u2022 Takes one integer input (index 0-5)\n\u2022 Retrieves the element, gets its type name\n\u2022 Prints: iterable (str/list/dict), numeric (int/float), or other\n\nFormat: Element: [val], Type: [name], Message: [category message]',
 example:'3',
-expected:'Element: [\'hammer\', \'wrench\', \'drill\'], Type: list, Message: This element is iterable.',
+expected:"Element: ['hammer', 'wrench', 'drill'], Type: list, Message: This element is iterable.",
 hint:'Use type(elem).__name__ for the type name. Use isinstance(elem,(str,list,dict)) for iterable check.',
 concepts:['type().__name__','isinstance()','list indexing'],
 solution:"inventory=['Warehouse Report',2026,18.5,['hammer','wrench','drill'],None,{'manager':'Dana','shift':'night'}]\nidx=int(input('Enter index: '))\nelem=inventory[idx]\nname=type(elem).__name__\nif isinstance(elem,(str,list,dict)):\n    msg='This element is iterable.'\nelif isinstance(elem,(int,float)):\n    msg='This element is numeric.'\nelse:\n    msg='This is a different data type.'\nprint(f'Element: {elem}, Type: {name}, Message: {msg}')",
@@ -817,7 +1107,7 @@ random:false},
 
 {comp:'C1',topic:'Type Conversion',diff:'inter',
 title:'Step count type comparisons',
-prompt:'Write a program that:\n• Takes 5 integer inputs (daily step counts)\n• Prints the sum three ways:\n    Integer: [int sum]\n    Float: [float sum]\n    String: [string concatenation]\n\nSame inputs, three completely different results.',
+prompt:'Write a program that:\n\u2022 Takes 5 integer inputs (daily step counts)\n\u2022 Prints the sum three ways:\n    Integer: [int sum]\n    Float: [float sum]\n    String: [string concatenation]\n\nSame inputs, three completely different results.',
 example:'2  5  8  1  9',
 expected:'Integer: 25\nFloat: 25.0\nString: 25819',
 hint:'Read each as a string first. int(x) for sum, float(x) for float sum, join for string concat.',
@@ -827,7 +1117,7 @@ random:false},
 
 {comp:'C1',topic:'String Slicing',diff:'inter',
 title:'Batch code formatter',
-prompt:'Write a program that:\n• Takes a 9-digit integer input (warehouse batch code)\n• Formats it as xx-xxx-xxxx (no spaces)\n• Prints the formatted code\n\nExample: 481029573 → 48-102-9573',
+prompt:'Write a program that:\n\u2022 Takes a 9-digit integer input (warehouse batch code)\n\u2022 Formats it as xx-xxx-xxxx (no spaces)\n\u2022 Prints the formatted code\n\nExample: 481029573 \u2192 48-102-9573',
 example:'481029573',
 expected:'48-102-9573',
 hint:'Convert int to str first. Slice: code[0:2], code[2:5], code[5:]. Join with "-".',
@@ -837,7 +1127,7 @@ random:false},
 
 {comp:'C1',topic:'Functions / Boolean',diff:'inter',
 title:'Approved-code checker',
-prompt:'Write a program that:\n• Uses approved_codes = [12, -8, 47, 63, -21]\n• Defines a function is_approved(n) that returns True or False\n• Takes one integer input\n• Calls the function and prints the result\n\nFormat: Is the input an approved code? [True/False]',
+prompt:'Write a program that:\n\u2022 Uses approved_codes = [12, -8, 47, 63, -21]\n\u2022 Defines a function is_approved(n) that returns True or False\n\u2022 Takes one integer input\n\u2022 Calls the function and prints the result\n\nFormat: Is the input an approved code? [True/False]',
 example:'63',
 expected:'Is the input an approved code? True',
 hint:'Use "return n in approved_codes" inside the function. The "in" operator returns a Boolean directly.',
@@ -847,7 +1137,7 @@ random:false},
 
 {comp:'C2',topic:'try/except IndexError',diff:'inter',
 title:'Safe list lookup',
-prompt:'Write a program that:\n• Uses languages = ["Python","Rust","Go","Swift","Kotlin","Ruby"]\n• Takes one integer input (index)\n• Wraps the list access in try/except\n• Prints the language, or "Invalid index" if out of range',
+prompt:'Write a program that:\n\u2022 Uses languages = ["Python","Rust","Go","Swift","Kotlin","Ruby"]\n\u2022 Takes one integer input (index)\n\u2022 Wraps the list access in try/except\n\u2022 Prints the language, or "Invalid index" if out of range',
 example:'2',
 expected:'Go',
 hint:'Wrap languages[idx] in a try block. Catch IndexError specifically and print "Invalid index".',
@@ -857,17 +1147,17 @@ random:false},
 
 {comp:'C2',topic:'Multi-tier Conditionals',diff:'inter',
 title:'Server load status',
-prompt:'Write a program that:\n• Takes one integer input (CPU load %)\n• Prints the load state: Idle(<20), Normal(20-59), Busy(60-84), Critical(85-96), Overloaded(97+)\n• Also prints "Consider scaling down." if load < 20\n• Also prints "Alert: Maximum load!" if load == 100\n\nThe safety comments are separate from the state — both can print.',
+prompt:'Write a program that:\n\u2022 Takes one integer input (CPU load %)\n\u2022 Prints the load state: Idle(<20), Normal(20-59), Busy(60-84), Critical(85-96), Overloaded(97+)\n\u2022 Also prints "Consider scaling down." if load < 20\n\u2022 Also prints "Alert: Maximum load!" if load == 100\n\nThe safety comments are separate from the state \u2014 both can print.',
 example:'15',
 expected:'Idle\nConsider scaling down.',
-hint:'Use if/elif/else for the state. Then use two SEPARATE standalone if statements for the comments — not elif.',
+hint:'Use if/elif/else for the state. Then use two SEPARATE standalone if statements for the comments \u2014 not elif.',
 concepts:['multi-tier if/elif/else','standalone if blocks','optional output'],
 solution:"load=int(input('Enter CPU load: '))\nif load>=97: state='Overloaded'\nelif load>=85: state='Critical'\nelif load>=60: state='Busy'\nelif load>=20: state='Normal'\nelse: state='Idle'\nprint(state)\nif load==100: print('Alert: Maximum load!')\nif load<20: print('Consider scaling down.')",
 random:false},
 
 {comp:'C2',topic:'Dict Loop / Accumulator',diff:'inter',
 title:'Farm crate order',
-prompt:'Write a program that:\n• Uses: crates = {"APPL":24.50,"PEAR":19.75,"PLUM":31.20,"CHER":42.10,"PEAC":27.65,"FIGS":55.30,"KIWI":18.90,"MANG":33.40,"GRAP":21.15}\n• Takes an integer input (quantity of crates), then that many string inputs (crate codes)\n• Accumulates the total cost\n• Prints the total to 2 decimal places\n\nFormat: Total price: $[total]',
+prompt:'Write a program that:\n\u2022 Uses: crates = {"APPL":24.50,"PEAR":19.75,"PLUM":31.20,"CHER":42.10,"PEAC":27.65,"FIGS":55.30,"KIWI":18.90,"MANG":33.40,"GRAP":21.15}\n\u2022 Takes an integer input (quantity of crates), then that many string inputs (crate codes)\n\u2022 Accumulates the total cost\n\u2022 Prints the total to 2 decimal places\n\nFormat: Total price: $[total]',
 example:'3  PEAR  MANG  FIGS',
 expected:'Total price: $108.45',
 hint:'Loop over the crate codes, look up each price in the dict, and add to total. Use :.2f for output.',
@@ -877,7 +1167,7 @@ random:false},
 
 {comp:'C2',topic:'Dict + Discount Tiers',diff:'adv',
 title:'Hardware store discount tiers',
-prompt:'Write a program that:\n• Uses: supplies = {"nails":0.12,"hinges":2.35,"brackets":1.48,"screws":0.09,"bolts":0.65}\n• Takes a string input (item) and integer input (quantity)\n• Applies discount: <15 = full price, 15-30 = 8% off, 31+ = 15% off\n• Prints item, quantity, and total cost\n\nFormat: [qty] [item] total cost: $[total]',
+prompt:'Write a program that:\n\u2022 Uses: supplies = {"nails":0.12,"hinges":2.35,"brackets":1.48,"screws":0.09,"bolts":0.65}\n\u2022 Takes a string input (item) and integer input (quantity)\n\u2022 Applies discount: <15 = full price, 15-30 = 8% off, 31+ = 15% off\n\u2022 Prints item, quantity, and total cost\n\nFormat: [qty] [item] total cost: $[total]',
 example:'nails  20',
 expected:'20 nails total cost: $2.21',
 hint:'Look up price in dict. Use if/elif/else for discount tier. Multiply qty * price * (1 - discount_rate).',
@@ -887,23 +1177,34 @@ random:false},
 
 {comp:'C3',topic:'File I/O Workflow',diff:'inter',
 title:'Append a sentence to a text file',
-prompt:'Write a program that:\n• Takes a filename as input\n• Reads the 3 words (one per line) using read()\n• Builds a sentence by joining them with spaces\n• Appends the sentence to the file on a new line\n• Reads and prints the updated file contents\n\nThe file has 3 words; your output shows all 4 lines.',
+prompt:'Write a program that:\n\u2022 Takes a filename as input\n\u2022 Reads the 3 words (one per line) using read()\n\u2022 Builds a sentence by joining them with spaces\n\u2022 Appends the sentence to the file on a new line\n\u2022 Reads and prints the updated file contents\n\nThe file has 3 words; your output shows all 4 lines.',
 example:'CityNames.txt (contains river / valley / bridge)',
 expected:'river\nvalley\nbridge\nriver valley bridge',
 hint:'Open with "r" to read. Open again with "a" to append. Use read().split() to get the words, " ".join() to build the sentence.',
-concepts:['open() r and a modes','read().split()','write() with newline','re-reading file'],
+concepts:['open() r and a modes','read().split()',' ".join() with newline','re-reading file'],
 solution:"fname=input('Enter the name of the input file: ')\nwith open(fname,'r') as f:\n    words=f.read().split()\nsentence=' '.join(words)\nwith open(fname,'a') as f:\n    f.write('\\n'+sentence)\nwith open(fname,'r') as f:\n    print(f.read().strip())",
 random:false},
 
 {comp:'C3',topic:'csv module',diff:'inter',
 title:'Reverse CSV rows',
-prompt:'Write a program that:\n• Takes a filename as input\n• Uses Python\'s csv module to read each row\n• Prints each row reversed as a list\n\nExample row "red, blue, green" becomes [\'green\', \'blue\', \'red\']',
+prompt:'Write a program that:\n\u2022 Takes a filename as input\n\u2022 Uses Python\'s csv module to read each row\n\u2022 Prints each row reversed as a list\n\nExample row "red, blue, green" becomes [\'green\', \'blue\', \'red\']',
 example:'roster.csv',
 expected:"['green', 'blue', 'red']\n['tuesday', 'monday']\n['chess', 'golf', 'tennis', 'soccer']",
 hint:'import csv. Use csv.reader(f) to get parsed rows. Apply [::-1] to reverse each row list.',
 concepts:['import csv','csv.reader()','list reversal [::-1]'],
 solution:"import csv\nfname=input('Enter the name of the file: ')\nwith open(fname,'r') as f:\n    for row in csv.reader(f):\n        print(row[::-1])",
-random:false}
+random:false},
+
+{comp:'C3',topic:'random module',diff:'adv',
+title:'Random score statistics',
+prompt:'Write a program that:\n\u2022 Imports random\n\u2022 Generates a list of 8 random integer scores between 60 and 100\n\u2022 Computes: sum, min, max, and average (rounded to 1 decimal)\n\u2022 Prints: Scores, Sum, Min, Max, Average\n\nFormat:\nScores: [list]\nSum: [sum]\nMin: [min]\nMax: [max]\nAverage: [avg]',
+example:'(random \u2014 output varies)',
+expected:'Scores: [75, 88, 62, ...]\nSum: 619\nMin: 62\nMax: 98\nAverage: 77.4',
+hint:'random.randint(60,100) in a list comprehension. Use built-in sum(), min(), max(). round(avg,1) for the average.',
+concepts:['random.randint()','list comprehension','sum() min() max()','round()'],
+solution:"import random\nscores=[random.randint(60,100) for _ in range(8)]\nprint('Scores:',scores)\nprint('Sum:',sum(scores))\nprint('Min:',min(scores))\nprint('Max:',max(scores))\nprint('Average:',round(sum(scores)/len(scores),1))",
+random:true}
+
 ];
 
 // ═══════════════════════════════════════════════════════════════════
@@ -915,10 +1216,11 @@ var SECTIONS = [
   {key:'c2',   label:'C2 &#8212; Control Flow',  total:10},
   {key:'c3',   label:'C3 &#8212; Packages &amp; Modules', total:10},
   {key:'sim',  label:'Simulated exam',          total:13},
+  {key:'zyb',  label:'zyBook Sim Practice Exam', total:30},
   {key:'nydi', label:'Now you do it',           total:12}
 ];
 var ALL = {gen:GEN, c1:C1Q, c2:C2Q, c3:C3Q, sim:SIM};
-var STATE = {gen:{}, c1:{}, c2:{}, c3:{}, sim:{}, nydi:{}};
+var STATE = {gen:{}, c1:{}, c2:{}, c3:{}, sim:{}, zyb:{}, nydi:{}};
 var SELS  = {gen:{}, c1:{}, c2:{}, c3:{}, sim:{}};
 var FILLS = {gen:{}, c1:{}, c2:{}, c3:{}, sim:{}};
 var nCode={}, nOut={}, nHint={}, nSol={};
@@ -929,10 +1231,12 @@ function escH(s){
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 function calcSec(key){
-  if(key==='nydi'){
+  if(key==='nydi'||key==='zyb'){
+    var _CQ=(key==='zyb'?ZYBQ:NYDI_Q);
+    var _CS=(key==='zyb'?STATE.zyb:STATE.nydi);
     var d=0,r=0;
-    NYDI_Q.forEach(function(_,i){if(STATE.nydi[i]!==undefined){d++;if(STATE.nydi[i])r++;}});
-    return{done:d,right:r,total:NYDI_Q.length};
+    _CQ.forEach(function(_,i){if(_CS[i]!==undefined){d++;if(_CS[i])r++;}});
+    return{done:d,right:r,total:_CQ.length};
   }
   var qs=ALL[key]||[], st=STATE[key]||{}, d=0,r=0;
   qs.forEach(function(_,i){if(st[i]!==undefined){d++;if(st[i])r++;}});
@@ -976,10 +1280,10 @@ function buildSecNav(){
   });
 }
 function switchSection(key){
-  if(curSec==='nydi') nSaveState();
+  if(curSec==='nydi'||curSec==='zyb') nSaveState();
   curSec=key; curQ=0; nCur=0;
   buildSecNav();
-  if(key==='nydi') nRender(); else render();
+  if(key==='nydi'||key==='zyb') nRender(); else render();
 }
 
 // ── sum cards ──────────────────────────────────────────────────────
@@ -1161,7 +1465,7 @@ function doFill(){
 }
 
 function examGo(d){
-  if(curSec==='nydi'){nSaveState();nCur=Math.max(0,Math.min(NYDI_Q.length-1,nCur+d));nRender();return;}
+  if(curSec==='nydi'||curSec==='zyb'){nSaveState();var _ql=(curSec==='zyb'?ZYBQ:NYDI_Q).length-1;nCur=Math.max(0,Math.min(_ql,nCur+d));nRender();return;}
   var max=(ALL[curSec]||[]).length-1;
   curQ=Math.max(0,Math.min(max,curQ+d));
   render();
@@ -1178,13 +1482,14 @@ function nSaveState(){
 }
 function nMark(pass){
   nSaveState();
-  STATE.nydi[nCur]=pass;
+  (curSec==='zyb'?STATE.zyb:STATE.nydi)[nCur]=pass;
   nRender();
   updateScore();
 }
 function nGrade(){
   nSaveState();
-  var q=NYDI_Q[nCur];
+  var _NGQ=(curSec==='zyb'?ZYBQ:NYDI_Q);
+  var q=_NGQ[nCur];
   var userOut=(nOut[nCur]||'').trim();
   var el=document.getElementById('n-result');
   if(!el) return;
@@ -1227,8 +1532,10 @@ function nGrade(){
 }
 
 function nRender(){
-  var q=NYDI_Q[nCur];
-  var st=STATE.nydi[nCur];
+  var _NQ=(curSec==='zyb'?ZYBQ:NYDI_Q);
+  var _NS=(curSec==='zyb'?STATE.zyb:STATE.nydi);
+  var q=_NQ[nCur];
+  var st=_NS[nCur];
   var done=st!==undefined;
   var passed=st===true;
   var compCls={C1:'p-c1',C2:'p-c2',C3:'p-c3'};
@@ -1238,18 +1545,18 @@ function nRender(){
   // tabs
   var tabRow=document.getElementById('tabs');
   tabRow.innerHTML='';
-  NYDI_Q.forEach(function(qq,i){
+  _NQ.forEach(function(qq,i){
     var b=document.createElement('button');
     var cls='t-btn'+(i===nCur?' active':'');
-    if(STATE.nydi[i]===true) cls+=' correct';
-    else if(STATE.nydi[i]===false) cls+=' wrong';
+    if(_NS[i]===true) cls+=' correct';
+    else if(_NS[i]===false) cls+=' wrong';
     b.className=cls;
     b.textContent='Q'+(i+1);
     (function(idx){b.onclick=function(){nSaveState();nCur=idx;nRender();};})(i);
     tabRow.appendChild(b);
   });
 
-  document.getElementById('q-label').textContent='Now you do it \u2014 Write the code yourself';
+  document.getElementById('q-label').textContent=(curSec==='zyb'?'zyBook Sim Practice Exam \u2014 Write the code yourself':'Now you do it \u2014 Write the code yourself');
 
   var concepts='';
   q.concepts.forEach(function(c){
@@ -1276,7 +1583,7 @@ function nRender(){
     +'<span class="pill '+(compCls[q.comp]||'p-gen')+'">'+q.comp+'</span>'
     +'<span class="pill '+(diffCls[q.diff]||'p-inter')+'">'+diffMap[q.diff]+'</span>'
     +'<span class="pill p-gen">'+escH(q.topic)+'</span>'
-    +'<span class="q-num">Challenge '+(nCur+1)+' of '+NYDI_Q.length+'</span>'
+    +'<span class="q-num">Challenge '+(nCur+1)+' of '+_NQ.length+'</span>'
     +'</div>'
     +'<div style="font-size:16px;font-weight:500;color:#1a1a1a;margin-bottom:13px">'+escH(q.title)+'</div>'
     +'<div class="nydi-prompt">'+escH(q.prompt)+'</div>'
