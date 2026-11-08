@@ -1,7 +1,7 @@
 # D335 — Introduction to Python Programming
 ## Full Practice Exam · WGU · Instructor: Dr. Mario Booker
 
-> **75 questions across 6 sections — all auto-graded in the browser.  
+> **105 questions across 7 sections — multiple choice auto-graded, coding sections use output comparison.  
 > No login required. No installation. Works on any device.**
 
 ---
@@ -24,15 +24,16 @@ There is **no login, no tracking, and no data sent anywhere** — everything run
 
 ## Exam Structure
 
-| # | Section | Questions | Format | Auto-graded? |
-|---|---------|-----------|--------|--------------|
+| # | Section | Questions | Format | Graded? |
+|---|---------|-----------|--------|---------|
 | 1 | Knowledge checks | 20 | Multiple choice + fill-in | Yes — instant |
 | 2 | C1 — Basic Scripts targeted test | 10 | Multiple choice | Yes — instant |
 | 3 | C2 — Control Flow targeted test | 10 | Multiple choice | Yes — instant |
 | 4 | C3 — Packages & Modules targeted test | 10 | Multiple choice | Yes — instant |
 | 5 | Simulated exam (output prediction) | 13 | Multiple choice | Yes — instant |
-| 6 | Now you do it (open coding) | 12 | Write real Python code | Output comparison |
-| | **Total** | **75** | | |
+| 6 | zyBook Sim Practice Exam | 30 | Write real Python code | Output comparison |
+| 7 | Now you do it (open coding) | 12 | Write real Python code | Output comparison |
+| | **Total** | **105** | | |
 
 ---
 
@@ -46,8 +47,8 @@ There is **no login, no tracking, and no data sent anywhere** — everything run
 5. Use the tab row to jump between questions or track what you have answered
 6. Watch your competency breakdown bars at the bottom — anything below 80% needs review
 
-### Section 6 — "Now you do it" (Coding challenges)
-This section requires **PyCharm** or any Python IDE installed on your computer.
+### Sections 6–7 — Coding Challenges
+These sections require **PyCharm** or any Python IDE installed on your computer.
 
 1. Read the challenge description carefully
 2. Write your Python program in PyCharm from scratch
@@ -58,7 +59,13 @@ This section requires **PyCharm** or any Python IDE installed on your computer.
 7. Click **Mark correct** or **Mark incorrect** based on the result
 8. If you are stuck, click **Show hint** first, then **Show solution** as a last resort
 
-> **Treat Section 6 like the real exam.** The official assessment asks you to write complete programs from scratch, not recognize answers. The more you practice writing without looking at the solution, the better prepared you will be.
+**Section 6 — zyBook Sim Practice Exam (30 questions)**  
+Covers the same C1–C3 concepts as the zyBook simulated practice exam — discount calculators, word analysis, grade logic, menu loops, file I/O, math and random modules, and more. Work through these before attempting the actual zyBook simulated exam.
+
+**Section 7 — Now You Do It (12 questions)**  
+Open-ended challenges drawn from the most common D335 exam patterns. These are the hardest problems in the tool. If you can write all 12 from scratch without hints, you are ready.
+
+> **Treat the coding sections like the real exam.** The official assessment asks you to write complete programs from scratch, not recognize answers. The more you practice writing without looking at the solution, the better prepared you will be.
 
 ---
 
@@ -86,13 +93,13 @@ Use these to target your remaining study time.
 
 ## Topics Covered
 
-**Competency 1 — Basic Scripts**
+**Competency 1 — Basic Scripts**  
 Variables and data types · type conversion · string methods and slicing · f-string formatting · arithmetic operators (including `//` and `%`) · list indexing (positive and negative) · dictionary basics · NameError / TypeError / ValueError classification
 
-**Competency 2 — Control Flow**
+**Competency 2 — Control Flow**  
 `if` / `elif` / `else` · `while` loops and `break` · `for` loops and `range()` · nested loops · function definition and `return` · variable scope · keyword arguments · accumulator pattern · list comprehensions · `sort()` and `sort(reverse=True)` · string processing loops
 
-**Competency 3 — Packages & Modules**
+**Competency 3 — Packages & Modules**  
 `import` syntax · `math` module (`math.pi`, `math.ceil`, `math.floor`) · `random` module (`random.randint`, `random.choice`) · `try` / `except` / `finally` · `ValueError` and `FileNotFoundError` · `open()` modes (`r`, `w`, `a`) · `read()` vs `readlines()` · `strip()` on file lines · `writelines()` vs `write()` · CSV parsing with `split()`
 
 ---
@@ -129,11 +136,7 @@ Include the following in your email:
 
 ---
 
-## For the Instructor
 
-The exam is a single self-contained HTML file (`d335_full_practice_exam.html`) with zero external dependencies. All questions, grading logic, rationale, and UI are bundled inline — no server, no database, no CDN calls required. GitHub Pages serves it as a static file.
-
-To update questions or add new sections, edit the HTML file directly and push to the `main` branch. GitHub Pages rebuilds automatically within 1–2 minutes.
 
 ---
 
